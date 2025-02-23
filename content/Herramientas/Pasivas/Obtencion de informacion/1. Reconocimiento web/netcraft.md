@@ -1,0 +1,3 @@
+es una herramienta información de un sitio web haciendo uso del protocolo whois, los certificados SSL, tls...
+nos recolecta toda la información que podríamos necesitar
+https://sitereport.netcraft.com/

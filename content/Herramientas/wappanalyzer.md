@@ -1,0 +1,1 @@
+permite ver que frameworks estan corriendo de fondo, como un php, WordPress ..

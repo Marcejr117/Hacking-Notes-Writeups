@@ -1,0 +1,1 @@
+nos permite crear diccionarios 

@@ -1,0 +1,1 @@
+un Extensión del navegador, que nos permite gestionar proxys, activando y desactivando el enrutamiento a placer  
