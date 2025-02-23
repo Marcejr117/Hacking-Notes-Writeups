@@ -9,3 +9,4 @@ Jajajajan esto va jajaj
 >pero que locura
 
 
+![[Pasted image 20250223194437.png]]
