@@ -1,8 +1,4 @@
----
-title: <% tp.file.title%>
-draft: false
-tags:
----
+
 - hacemos un escaneo de puertos con nmap y vemos que tenemos 3 puertos abiertos 21,22,53:
 ![[Pasted image 20240416005753.png]]
 ![[Pasted image 20240416005810.png]]
