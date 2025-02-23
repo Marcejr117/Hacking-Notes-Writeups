@@ -1,5 +1,5 @@
 ---
-title: Sin título
+title: Maquina 1
 draft: false
 tags:
 ---
