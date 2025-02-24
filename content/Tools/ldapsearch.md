@@ -1,4 +1,5 @@
 Mas info: [[15. Inyecciones LDAP]]
+Install: `sudo apt install ldap-utils`
 
 ```bash
 ldapsearch -x -H ldap://localhost -b dc=example,dc=org -D "cn=admin,dc=example,dc=org" -w admin 'cn=admin'

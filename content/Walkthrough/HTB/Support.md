@@ -22,8 +22,9 @@ nmap -p53,88,135,139,389,445,464,593,636,3268,3269,5985,9389,49664,49667,49674,4
 > [!Example]- Result
 >![[Pasted image 20250224171441.png]]
 
-Domain name: `support.htb0.`
-
+Domain name: `support.htb`, lets add this locations to `/etc/hosts`
+> [!Example]- Result
+> ![[Pasted image 20250224193027.png]]
 ## DNS
 - Using [[dig]], but i didnt get nothing especial, as well as using other utilities:
 ```bash
