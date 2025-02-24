@@ -1,3 +1,9 @@
+---
+title: Editorial
+draft: false
+tags:
+---
+
 Vamos a hacer un escaneo con [[Anotaciones/Herramientas/Nmap|Nmap]]
 ```bash
 nmap -sS -n -Pn -p- --min-rate 5000 10.10.11.20 -oG allPorts
