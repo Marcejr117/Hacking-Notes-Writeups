@@ -25,11 +25,9 @@ sudo nmap -p 53,88,135,139,389,445,464,593,636,1433,3268,3269,5985,9389,47001,49
 ````
 
 
- > [!info]- Result
- > 
- > ![Pasted image 20250216205045.png](../../assets/Pasted%20image%2020250216205045.png)
- > 
- > ![Pasted image 20250216205113.png](../../assets/Pasted%20image%2020250216205113.png)
+>[!info]- Result
+>![Pasted image 20250216205045.png](../../assets/Pasted%20image%2020250216205045.png) 
+>![Pasted image 20250216205113.png](../../assets/Pasted%20image%2020250216205113.png)
 
 * So we have this information to be highlighted
   * we are in front of a Domain controller (DC01.sequel.htb)
@@ -50,8 +48,8 @@ or (faster)
 ldapdomaindump 10.10.11.51 -u 'sequel\rose' -p 'KxEPkKe6R8su' --authtype SIMPLE 
 ````
 
- > [!info]- Result
- > ![Pasted image 20250217010219.png](../../../../assets/Pasted%20image%2020250217010219.png)
+>[!info]- Result
+>![Pasted image 20250217010219.png](../../../../assets/Pasted%20image%2020250217010219.png)
 
 ## kerberos
 
