@@ -4,6 +4,7 @@ draft: false
 tags:
 ---
 ![[Pasted image 20250224170258.png]]
+
 Machine: https://app.hackthebox.com/machines/484
 
 # Enumeration
@@ -108,4 +109,19 @@ impacket-GetNPUsers support.htb/ldap -no-pass -k
 >![[Pasted image 20250224204158.png]]
 >![[Pasted image 20250224204303.png]]
 
-- There are no user with this flag on "UF_DONT_REQUIRE_PREAUTH" so lets try brute forcing the pass
+- There are no user with this flag on "UF_DONT_REQUIRE_PREAUTH" so lets try brute forcing the pass with [[kerbrute]] but... nothing
+```bash
+kerbrute_linux_amd64 bruteuser -d support.htb --dc 10.10.11.174 /usr/share/wordlists/rockyou.txt usernames -t 200
+```
+>[!Example]- Result
+>![[Pasted image 20250224230657.png]]
+
+## Foothold
+- going back to the executables lets try to run it on a local environment
+```cmd
+.\UserInfo.exe
+```
+>[!example]- Result
+>![[Pasted image 20250224231706.png]]
+
+- looks like we can get info
