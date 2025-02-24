@@ -86,11 +86,10 @@ strings -e l UserInfo.exe | less
 ## Kerberos
 - Maybe we can try to test this users using [[kerbrute]], first we can try a random username
 ```bash
-kerbrute_linux_amd64 userenum -d support.htb --dc 10.10.11.174 /usr/share/SecLists/Usernames/top-usernames-shortlist.txt
+kerbrute_linux_amd64 userenum -d support.htb --dc 10.10.11.174 /usr/share/SecLists/Usernames/xato-net-10-million-usernames.txt
 ```
 >[!Example]- Result
->![[Pasted image 20250224200154.png]]
->
+>![[Pasted image 20250224201525.png]]
 
 - now a wordlist with the found users
 ```bash
@@ -99,4 +98,4 @@ kerbrute_linux_amd64 userenum -d support.htb --dc 10.10.11.174 usernames
 >[!Example]- Result
 >![[Pasted image 20250224200619.png]]
 
-- nice we have a valid user, now we can try brute forcing the password
+- When we are on a AD enviroment and we have valid username we can use 
