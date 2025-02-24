@@ -117,8 +117,10 @@ kerbrute_linux_amd64 bruteuser -d support.htb --dc 10.10.11.174 /usr/share/wordl
 >![[Pasted image 20250224230657.png]]
 
 ## Foothold
->[!info]- we have to be connected via VPN as well
+>[!info]- we have to be connected via VPN as well as set the domain in C:\Windows\System32\drivers\etc\hosts (windows)
 >![[Pasted image 20250224232658.png]]
+>![[Pasted image 20250224234031.png]]
+
 
 - going back to the executables lets try to run it on a local environment
 ```cmd
@@ -128,3 +130,18 @@ kerbrute_linux_amd64 bruteuser -d support.htb --dc 10.10.11.174 /usr/share/wordl
 >![[Pasted image 20250224231706.png]]
 
 - looks like we can get info
+>[!example]- Result
+>![[Pasted image 20250224234349.png]]
+
+- if the program can read via ldap (as we saw using [[strings]]) maybe is performing authentication, and it is sending the credencials, so we can check it using [[wireshark]] (a protable executable is include with the machine), so as fast as we send the request we see the credentials
+```shell
+.\UserInfo.exe user -username raven.clifton
+```
+>[!example]- Request
+>![[Pasted image 20250224235216.png]]
+
+
+
+
+
+
