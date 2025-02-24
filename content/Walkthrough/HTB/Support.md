@@ -70,5 +70,13 @@ mget *
 > [!Example]- Result
 > ![[Pasted image 20250224185725.png]]
 
-- perfect 
+- There are a lot of `.exe` we can try to run [[strings]], and looks like we have a  valid user '0xdf'
+```bash
+strings UserInfo.exe | less
+```
+>[!Example]- Result
+>![[Pasted image 20250224194343.png]]
+
+- Maybe we can try brute force into this user
+
 
