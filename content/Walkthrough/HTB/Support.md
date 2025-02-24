@@ -108,5 +108,4 @@ impacket-GetNPUsers support.htb/ldap -no-pass -k
 >![[Pasted image 20250224204158.png]]
 >![[Pasted image 20250224204303.png]]
 
-
 - There are no user with this flag on "UF_DONT_REQUIRE_PREAUTH" so lets try brute forcing the pass
