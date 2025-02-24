@@ -52,6 +52,14 @@ nmap -p445 -script "smb*" -T5 -n -sS -Pn 10.10.11.174
 smbclient -N -L //10.10.11.174
 ```
 ![[Pasted image 20250224184040.png]]
+- lets check the privilegues that we have on this shares using [[smbmap]]
+>[!Warning] If we want to use a null session in [[smbmap]] we need to write "none" in the "-u" field, This dont works `-u ''`
+```bash
+smbmap -H 10.10.11.174 -u none
+```
+> [!Example]- Result
+> ![[Pasted image 20250224192150.png]]
+
 - Grate, now we can see the shares, and there are some interestrings folder like "support-tools" lets take a look
 ```bash
 smbclient -N //10.10.11.174/support-tools
