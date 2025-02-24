@@ -70,13 +70,33 @@ mget *
 > [!Example]- Result
 > ![[Pasted image 20250224185725.png]]
 
-- There are a lot of `.exe` we can try to run [[strings]], and looks like we have a  valid user '0xdf'
+- There are a lot of `.exe` we can try to run [[strings]] (`-e l` is useful to windows binaries l = 16bits), without `-e l`, maybe a user '0xdf'
 ```bash
 strings UserInfo.exe | less
 ```
 >[!Example]- Result
 >![[Pasted image 20250224194343.png]]
+- with `-e l`, maybe more users 'armando, ldap'
+```bash
+strings -e l UserInfo.exe | less
+```
+>[!Example]- Result
+>![[Pasted image 20250224195633.png]]
 
-- Maybe we can try brute force into this user
+## Kerberos
+- Maybe we can try to test this users using [[kerbrute]], first we can try a random username
+```bash
+kerbrute_linux_amd64 userenum -d support.htb --dc 10.10.11.174 /usr/share/SecLists/Usernames/top-usernames-shortlist.txt
+```
+>[!Example]- Result
+>![[Pasted image 20250224200154.png]]
+>
 
+- now a wordlist with the found users
+```bash
+kerbrute_linux_amd64 userenum -d support.htb --dc 10.10.11.174 usernames
+```
+>[!Example]- Result
+>![[Pasted image 20250224200619.png]]
 
+- nice we have a valid user, now we can try brute forcing the password
