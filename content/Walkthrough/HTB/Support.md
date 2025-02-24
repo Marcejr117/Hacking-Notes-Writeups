@@ -117,6 +117,9 @@ kerbrute_linux_amd64 bruteuser -d support.htb --dc 10.10.11.174 /usr/share/wordl
 >![[Pasted image 20250224230657.png]]
 
 ## Foothold
+>[!info]- we have to be connected via VPN as well
+>![[Pasted image 20250224232658.png]]
+
 - going back to the executables lets try to run it on a local environment
 ```cmd
 .\UserInfo.exe
