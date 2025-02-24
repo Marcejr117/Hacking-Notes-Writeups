@@ -14,7 +14,7 @@ export default ((opts?: Options) => {
     return (
       <footer class={`${displayClass ?? ""}`}>
         <p>
-          Created by <a href="https://github.com/Marcejr117" target="_blank">Marcejr117</a>
+          Created by: <a href="https://www.linkedin.com/in/marcelino-garc%C3%ADa-g%C3%B3mez-047b57220/" target="_blank">Marcelino Garcia</a>
         </p>
         <ul>
           {Object.entries(links).map(([text, link]) => (
