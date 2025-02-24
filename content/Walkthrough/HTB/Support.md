@@ -49,5 +49,7 @@ nmap -p445 -script "smb*" -T5 -n -sS -Pn 10.10.11.174
 
 - Using [[smbclient]] lets try to enumerate shares with a NULL session
 ```bash
-
+smbclient -N -L //10.10.11.174
 ```
+![[Pasted image 20250224184040.png]]
+Grate, now we can see the shares, and there are some interestrings folder like "support-tools"

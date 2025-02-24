@@ -1,3 +1,6 @@
+> [!Warning] [[smbclient]] no tiene los mismo parametros que smbclient.py
+
+
 Herramienta que nos permite conectar a un servidor samba desde el terminal
 Mas ejemplos: #EnumSMB_smbclient 
 ##### Ejemplos
