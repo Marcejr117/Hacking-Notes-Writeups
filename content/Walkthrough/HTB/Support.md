@@ -32,6 +32,13 @@ dig 10.10.11.174
 > [!Example]- Result
 > ![[Pasted image 20250224172223.png]]
 
+## LDAP
+- We can use [[ldapsearch]] and try to enumerate without credentials, but nothing interesting
+```bash
+ldapsearch -x -H ldap://10.10.11.174 -D '' -w '' -b "DC=support,DC=htb"  
+```
+![[Pasted image 20250224174835.png]]
+
 ## SMB
 - Using [[content/Tools/Nmap|Nmap]] we can enumetate the supported dialects, but there is not a lot of info
 ```bash
@@ -40,9 +47,7 @@ nmap -p445 -script "smb*" -T5 -n -sS -Pn 10.10.11.174
 > [!Example]- Result
 > ![[Pasted image 20250224174140.png]]
 
-## LDAP
-- We can use [[ldapsearch]] and try to enumerate without credentials
+- Using [[smbclient]] lets try to enumerate shares with a NULL session
 ```bash
-ldapsearch -x -H ldap://10.10.11.174 -D '' -w '' -b "DC=support,DC=htb"  
+
 ```
-![[Pasted image 20250224174835.png]]
