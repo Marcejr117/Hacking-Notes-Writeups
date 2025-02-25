@@ -17,3 +17,10 @@ https://bloodhound.readthedocs.io/en/latest/installation/linux.html
 
 > HAY QUE CAMBIAR LA PASS!!! POR OBLIGACION
 ![[Pasted image 20250219191737.png]]
+
+# Limpiar la base de datos anterior
+
+![[Pasted image 20250225155814.png]]
+```neo4j
+MATCH (n) DETACH DELETE n;
+```
