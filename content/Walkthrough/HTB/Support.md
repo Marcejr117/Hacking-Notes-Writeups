@@ -143,7 +143,7 @@ kerbrute_linux_amd64 bruteuser -d support.htb --dc 10.10.11.174 /usr/share/wordl
 >[!Example]- Result
 >![[Pasted image 20250225001524.png]]
 
-## Decompile
+### Decompile
 - At this point we know that `userinfo.exe` make a ldap connection so the credentials are used in here, so lets try to decompile with [[dnSpy]]
 >[!example]- Result
 >![[Pasted image 20250225110253.png]]
@@ -179,5 +179,11 @@ crackmapexec smb 10.10.11.174 -u 'ldap' -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz
 >[!example]- Result
 >![[Pasted image 20250225115432.png]]
 
-
+### winrm
+- we can try this credentials to authenticate us in winrm protocol (port `5985`)
+```bash
+crackmapexec winrm 10.10.11.174 -u 'ldap' -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz'
+```
+>[!example]- Result
+>![[Pasted image 20250225141743.png]]
 
