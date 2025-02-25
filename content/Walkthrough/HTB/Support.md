@@ -164,6 +164,13 @@ public static string getPassword()
 	return Encoding.Default.GetString(array2);
 }
 ```
+- Here we hace the plan password, so we can inicialice the program on debug mode and set a breakpoint, when the function is used
+>[!example]- Result
+>![[Pasted image 20250225114348.png]]
+
+- So the credentials are `ldap:nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz`
+>[!example]- Result
+>![[Pasted image 20250225114418.png]]
 
 
 
