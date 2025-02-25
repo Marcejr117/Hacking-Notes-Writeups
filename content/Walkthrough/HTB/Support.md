@@ -121,7 +121,6 @@ kerbrute_linux_amd64 bruteuser -d support.htb --dc 10.10.11.174 /usr/share/wordl
 >![[Pasted image 20250224232658.png]]
 >![[Pasted image 20250224234031.png]]
 
-
 - going back to the executables lets try to run it on a local environment
 ```cmd
 .\UserInfo.exe
@@ -144,7 +143,27 @@ kerbrute_linux_amd64 bruteuser -d support.htb --dc 10.10.11.174 /usr/share/wordl
 >[!Example]- Result
 >![[Pasted image 20250225001524.png]]
 
+## Decompile
+- At this point we know that `userinfo.exe` make a ldap connection so the credentials are used in here, so lets try to decompile with [[dnSpy]]
+>[!example]- Result
+>![[Pasted image 20250225110253.png]]
 
+- perfect, so we have:
+	- The enconded password: `0Nv32PTwgYjzg9/8j5TbmvPd3e7WhtWWyuPsyO76/Y+U193E`
+	- The key: `armando`
+	- And the process
+```c#
+public static string getPassword()
+{
+	byte[] array = Convert.FromBase64String(Protected.enc_password);
+	byte[] array2 = array;
+	for (int i = 0; i < array.Length; i++)
+	{
+		array2[i] = (array[i] ^ Protected.key[i % Protected.key.Length] ^ 223);
+	}
+	return Encoding.Default.GetString(array2);
+}
+```
 
 
 
