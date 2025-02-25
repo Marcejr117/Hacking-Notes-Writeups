@@ -1,3 +1,4 @@
+https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1
 es una herramienta que nos permite hacer enumeracion local de nuestros usuario y equipo a nivel de AD
 
 1. primero se importa

