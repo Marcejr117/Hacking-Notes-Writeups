@@ -34,4 +34,4 @@ whatweb http://<ip>
 >![[Pasted image 20250225225016.png]]
 >![[Pasted image 20250225225051.png]]
 
-- so it using "werkzeug 2.1.2" we can try somethings like bypass console PIN
+- so it using "werkzeug 2.1.2" we can try somethings like [bypass console PIN](https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-web/werkzeug.html?highlight=Werkzeug#console-rce) but first we need to find a path traversal,
