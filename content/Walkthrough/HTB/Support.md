@@ -39,7 +39,8 @@ dig 10.10.11.174
 ```bash
 ldapsearch -x -H ldap://10.10.11.174 -D '' -w '' -b "DC=support,DC=htb"  
 ```
-![[Pasted image 20250224174835.png]]
+>[!example]- Result
+>![[Pasted image 20250224174835.png]]
 
 ## SMB
 - Using [[content/Tools/Nmap|Nmap]] we can enumetate the supported dialects, but there is not a lot of info
@@ -53,7 +54,9 @@ nmap -p445 -script "smb*" -T5 -n -sS -Pn 10.10.11.174
 ```bash
 smbclient -N -L //10.10.11.174
 ```
-![[Pasted image 20250224184040.png]]
+>[!Example]- Result
+>![[Pasted image 20250224184040.png]]
+
 - lets check the privilegues that we have on this shares using [[smbmap]]
 >[!Warning] If we want to use a null session in [[smbmap]] we need to write "none" in the "-u" field, This dont works `-u ''`
 ```bash
