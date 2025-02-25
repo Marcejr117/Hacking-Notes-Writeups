@@ -172,5 +172,12 @@ public static string getPassword()
 >[!example]- Result
 >![[Pasted image 20250225114418.png]]
 
+- To be sure we can test the credentials
+```bash
+crackmapexec smb 10.10.11.174 -u 'ldap' -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz'
+```
+>[!example]- Result
+>![[Pasted image 20250225115432.png]]
+
 
 
