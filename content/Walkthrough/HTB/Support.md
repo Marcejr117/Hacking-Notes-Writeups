@@ -140,6 +140,9 @@ kerbrute_linux_amd64 bruteuser -d support.htb --dc 10.10.11.174 /usr/share/wordl
 >[!example]- Request
 >![[Pasted image 20250224235216.png]]
 
+- but nothing interesting here
+>[!Example]- Result
+>![[Pasted image 20250225001524.png]]
 
 
 
