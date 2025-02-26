@@ -111,12 +111,14 @@ python -c 'print(0x0242ac110007)'
 >[!example]- Result
 >![[Pasted image 20250226172041.png]]
 
-- And get this value `/proc/sys/kernel/random/boot_i` in my case `e9630489-23dd-47bb-b05d-3250757832dc` 
+- And get this value `/proc/sys/kernel/random/boot_id` in my case `e9630489-23dd-47bb-b05d-3250757832dc` and u have to append de value of `/proc/self/cgroup` (las slash)
 ```bash
 cat /proc/sys/kernel/random/boot_id
+cat /proc/self/cgroup
 ```
 >[!example]- Result
 >![[Pasted image 20250226172348.png]]
+>![[Pasted image 20250226175135.png]]
 
 - so the final code:
 ```python
@@ -131,7 +133,7 @@ probably_public_bits = [
 
 private_bits = [
 	'2485377892359',# str(uuid.getnode()),  /sys/class/net/ens33/address
-	'e963048923dd47bbb05d3250757832dc'# get_machine_id(), /etc/machine-id
+	'e9630489-23dd-47bb-b05d-3250757832dc'# get_machine_id(), /etc/machine-id
 ]
 
 h = hashlib.md5()
