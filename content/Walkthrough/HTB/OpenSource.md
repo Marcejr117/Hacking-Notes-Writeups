@@ -102,5 +102,5 @@ export TERM=xterm-256color
 - we are inside a docker so lets get out of here
 >[!example]- Result
 >![[Pasted image 20250226164003.png]]
-## Enumeration
-- check 
+
+- now we have all the pieces to reproduce a PIN code to get access at debug console
