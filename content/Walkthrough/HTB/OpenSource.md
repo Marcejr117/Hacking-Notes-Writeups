@@ -34,5 +34,21 @@ whatweb http://<ip>
 >![[Pasted image 20250225225016.png]]
 >![[Pasted image 20250225225051.png]]
 
+### Web estructure
 - so it using "werkzeug 2.1.2" we can try somethings like [bypass console PIN](https://www.daehee.com/blog/werkzeug-console-pin-exploit) because the Debug is enabled, but first we need to find a path traversal / LFI in order to get `uuid.getnode()` and `get_machine_id()` 
+>[!example]- Result
+>![[Pasted image 20250226152522.png]]
+
+- we can upload our files to the service
+>[!Example]- Result
+>![[Pasted image 20250226153021.png]]
+
+
+- The web allow us to download, what appears to be, que source code of the web application, so after reading the content we know:
+	- Web applicaction is deployed in a docker container
+	- User "root" is running the service
+	- We know how the upload service works, and seem to be susceptible to FLI
+>[!example]- Result
+>![[Pasted image 20250226153247.png]]
+
 
