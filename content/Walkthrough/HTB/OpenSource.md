@@ -103,4 +103,4 @@ export TERM=xterm-256color
 >[!example]- Result
 >![[Pasted image 20250226164003.png]]
 
-- now we have all the pieces to reproduce a PIN code to get access at debug console
+- now we have all pieces to reproduce a PIN code to get access at debug console
