@@ -51,4 +51,12 @@ whatweb http://<ip>
 >[!example]- Result
 >![[Pasted image 20250226153247.png]]
 
+- if we look closer we can see that there is a function named `get_file_name()` that came from `app.utils` so lets check it
+>[!example]- Result
+>![[Pasted image 20250226154154.png]]
 
+- looks like is replacement the string `../` in order to avoid path traversal
+>[!example]- Result
+>![[Pasted image 20250226154333.png]]
+
+- 
