@@ -350,4 +350,14 @@ lsof -i:3000
 ### GITEA Enumeration
 - We can use the found creds to log in on this service, and looks like he have a private repo
 >[!example]- Result
->
+>![[Pasted image 20250227144045.png]]
+
+- perfect, we have ssh keys lets try to use it (we have to change the file's privileges)
+```bash
+chmod 600 id_rsa
+ssh dev01@10.10.11.164 -i id_rsa
+```
+>[!example]- Result
+>![[Pasted image 20250227145047.png]]
+
+# Privilege Escalation
