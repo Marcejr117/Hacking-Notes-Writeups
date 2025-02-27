@@ -349,4 +349,5 @@ lsof -i:3000
 
 ### GITEA Enumeration
 - We can use the found creds to log in on this service, and looks like he have a private repo
->[!exa]
+>[!example]- Result
+>
