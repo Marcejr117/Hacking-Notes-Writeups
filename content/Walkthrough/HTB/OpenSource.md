@@ -246,3 +246,28 @@ export PS1="\u@\h:\w\# "
 export TERM=xterm-256color
 ```
 # Docker Breakout
+- After a while enumerating the container, i couldn't find nothing, but i remember something, i didnt enumerate the git repo branches 
+
+## Enumerate Git Branch
+- Looking for more data we can select an other branch in the git repo
+```bash
+git branch 
+```
+>[!example]- Result
+>![[Pasted image 20250227114640.png]]
+
+- We have an other branch so lets enumerate the commits
+```shell
+git log dev
+```
+>[!example]- Result
+>![[Pasted image 20250227114934.png]]
+
+- now if we check the content we can see this
+```bash
+git show a76f8f75f7a4a12b706b0cf9c983796fa1985820
+```
+>[!example]- Result
+>![[Pasted image 20250227115233.png]]
+
+- We found a user `dev01:Soulless_Developer#2022"`, can we use this credentials to get 
