@@ -386,7 +386,7 @@ watch -n 1 ls -l /bin/bash
 >[!example]- After
 >![[Pasted image 20250227154856.png]]
 
-- perfect now we are root
+- perfect now we are root!
 ```bash
 bash -p
 ```
