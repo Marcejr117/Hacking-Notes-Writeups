@@ -314,7 +314,7 @@ chmod +x chisel
 
 - optionally we can reduce the file size
 ```bash
-su -hc chisel 
+du -hc chisel 
 upx chisel
 ```
 
@@ -361,3 +361,13 @@ ssh dev01@10.10.11.164 -i id_rsa
 >![[Pasted image 20250227145047.png]]
 
 # Privilege Escalation
+## Process Enumeration
+- We can use [[pspy64]] in order to get all running process or contabs
+```bash
+git clone https://github.com/DominicBreuker/pspy 
+cd pspy
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build .
+```
+>[!example]- Result
+>![[Pasted image 20250227152415.png]]
+
