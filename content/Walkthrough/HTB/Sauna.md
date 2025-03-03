@@ -142,7 +142,11 @@ evil-winrm --ip 10.10.10.175 -u fsmith -p 'Thestrokes23'
 >![[Pasted image 20250303201416.png]]
 
 # Lateral Movement
+## System Enumeration
 - We cant use [[mimikatz]] to dump credentials (because is a privileged action), as we are in the IIS machine we can read some configuration files into `\inetpub\wwwroot`
 ```bash
 dir -Force
 ```
+- `-Force`: to list hidden resources
+
+- but there are no configuration files here, so lets keep enumerating, 
