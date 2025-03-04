@@ -149,4 +149,16 @@ dir -Force
 ```
 - `-Force`: to list hidden resources
 
-- but there are no configuration files here, so lets keep enumerating, 
+- but there are no configuration files here, so lets keep enumerating, we can run [[PrivescCheck]] to get more info
+```bash
+powershell -ep bypass -c ". .\PrivescCheck.ps1; Invoke-PrivescCheck"
+```
+>[!example]- Result
+>![[Pasted image 20250303221845.png]]
+
+- but nothing especial, lets keep enumerating with [[PowerUP]], and nothing interesting
+>[!example]- Result
+>![[Pasted image 20250303223722.png]]
+
+- now with [[winPEAS]]
+
