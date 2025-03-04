@@ -1,7 +1,7 @@
 ---
-title: index
+title: Landing Page
 draft: false
 tags:
 ---
 
-mi tremenda pagina
+My Writeup's web
