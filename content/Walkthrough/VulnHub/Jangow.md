@@ -19,4 +19,4 @@ ahora vamos a hacer un analisis mas exhaustivo de cada uno
 sudo nmap -p53,8090,21178,25203 192.168.1.200 -sCV --min-rate 5000 -vvv
 ```
 ![[Pasted image 20231007193540.png]]
-los otros puertos no los reconoce, vamos a analizar los servicios, vemos que hay un servicio llamado [[]]
+los otros puertos no los reconoce, vamos a analizar los servicios, vemos que hay un servicio llamado
