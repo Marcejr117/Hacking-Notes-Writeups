@@ -68,8 +68,8 @@ rlwrap -cAr nc -nlvp 4444
 ```
 
 >[!example]- Result
-![[Pasted image 20250305111718.png]]
-![[Pasted image 20250305111747.png]]
+>![[Pasted image 20250305111718.png]]
+>![[Pasted image 20250305111747.png]]
 
 # Privilege Escalation
 ## Enumerating
