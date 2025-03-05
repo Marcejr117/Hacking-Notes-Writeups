@@ -103,3 +103,14 @@ searchsploit CloudMe
 >[!example]- Result
 >![[Pasted image 20250305121102.png]]
 
+## Buffer Overflow
+- In order to attack this service we have to download the executable and move it to a windows machine (CloudMe banary is x32 bits)
+>[!example]- Result
+>![[Pasted image 20250305151320.png]]
+>![[Pasted image 20250305151911.png]]
+>![[Pasted image 20250305152032.png]]
+
+- As the port is locally opened we need to get access using [[chisel]].
+
+
+
