@@ -3,7 +3,8 @@ title: TimeLapse
 draft: false
 tags:
 ---
-![[Timelapse.png|450]]![[Pasted image 20250306110638.png|200]]
+![[Timelapse.png|500]]![[Pasted image 20250306110638.png|200]]
+
 Machine: https://app.hackthebox.com/machines/452
 
 # Enumeration
