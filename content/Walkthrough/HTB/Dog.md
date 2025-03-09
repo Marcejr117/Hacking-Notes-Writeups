@@ -145,7 +145,7 @@ credentials: `root:BackDropJ2024DS2024`
 >[!example]- Result
 >![[Pasted image 20250309210516.png]]
 
-- After testing some thing i can get access via SSH reusing the founded credentials `johncusack:BackDropJ2024DS2024``
+- After testing some thing i can get access via SSH reusing the found credentials `johncusack:BackDropJ2024DS2024``
 ```bash
 ssh johncusack@10.10.11.58
 ```
