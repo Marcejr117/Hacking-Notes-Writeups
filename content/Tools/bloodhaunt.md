@@ -9,6 +9,9 @@ sudo apt-get install neo4j
 mas detalles
 https://bloodhound.readthedocs.io/en/latest/installation/linux.html
 
+# Instalación 2
+`https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/bloodhound.html?highlight=bloodhoun#installation`
+
 ![[Pasted image 20250219191310.png]]
 
 # Creds
