@@ -25,8 +25,8 @@ Domain Name: `htb.local`
 Host Name: `FOREST`
 SMB guest account support
 
-## LDAP
-- Lets try to get all available information without credentials
+## LDAP (No creds)
+- Lets try to get all available information
 ```bash
 ldapsearch -H ldap://10.10.10.161 -x -s base
 ```
@@ -38,5 +38,14 @@ ldapsearch -H ldap://10.10.10.161 -x -b 'DC=htb,DC=local'
 >[!example]- Result
 >![[Pasted image 20250311233056.png]]
 >This message make me sense about a [forest structure](https://academy.hackthebox.com/module/74/section/700)
+
+>[!warning] Looks like we can use [[ldapdomaindump]] because we can't enumerate all DNs as anonymous
 >
+
+- Getting just account name that are part of the group: 'domain users' 
+```bash
+ldapsearch -H ldap://10.10.10.161 -x -b 'DC=htb,DC=local' "(&(objectCategory=person)(objectClass=user)(primaryGroupID=513))" sAMAccountName | grep -i 'samaccountname'
+```
+>[!example]- Result
+>![[Pasted image 20250312003958.png]]
 
