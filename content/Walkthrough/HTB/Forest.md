@@ -110,3 +110,19 @@ evil-winrm -p 's3rvice' -u 'svc-alfresco' -i 10.10.10.161
 >![[Pasted image 20250312164819.png]]
 
 # Privilege Escalation
+- We cant use [[impacket-secretsdump]] because the user cant use RPC using this tools:
+>[!example]- Result
+>![[Pasted image 20250312231844.png]]
+>![[Pasted image 20250312231846.png]]
+
+- So we have to dump the credentials using other methods like [[mimikatz]]
+```bash
+locate mimikatz.exe
+```
+>[!example]- Result
+>![[Pasted image 20250312232203.png]]
+
+- Upload and execute
+```bash
+
+```
