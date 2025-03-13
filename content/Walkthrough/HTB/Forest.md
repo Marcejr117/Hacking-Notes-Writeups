@@ -103,7 +103,7 @@ evil-winrm -p 's3rvice' -u 'svc-alfresco' -i 10.10.10.161
 >![[Pasted image 20250312164819.png]]
 
 # Privilege Escalation
-- We cant use [[impacket-secretsdump]] because the user cant use RPC (port 49667) using this tools, (we don't have permisions)[^1]:
+- We cant use [[impacket-secretsdump]] because the user cant use RPC (port 49667) using this tools, (we don't have permissions)[^1]:
 >[!example]- Result
 >![[Pasted image 20250312231844.png]]
 >![[Pasted image 20250312231846.png]]
