@@ -120,7 +120,7 @@ crackmapexec smb 10.10.10.100 -u 'active.htb\SVC_TGS' -p 'GPPstillStandingStrong
 >![[Pasted image 20250311023023.png]]
 
 
-- The share "users" if quite interesting, because  inside "Default" folder we found some file named "NTUSER" this type of files contains recent access and credentials, we can use a tool like [[regripper]], but there are no useful information
+- The share "users" if quite interesting, because  inside "Default" folder we found some file named "NTUSER.DAT" this type of files contains recent access and credentials, we can use a tool like [[regripper]], but there are no useful information
 ```bash
 smbclient //10.10.10.100/Users -U active.htb/SVC_TGS%GPPstillStandingStrong2k18 -c 'mget "Default"/*'
 ```
