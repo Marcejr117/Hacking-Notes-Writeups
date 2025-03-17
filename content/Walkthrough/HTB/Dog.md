@@ -1,6 +1,6 @@
 ---
 title: Dog
-draft: true
+draft: false
 tags:
 ---
 
