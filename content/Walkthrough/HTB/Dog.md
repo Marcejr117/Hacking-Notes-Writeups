@@ -6,7 +6,7 @@ tags:
 
 # Enumeration
 ## Port Scanning
-- Using [[content/Tools/Nmap|Nmap]] to get opened ports
+- Using [[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]] to get opened ports
 ```bash
 nmap -p- -sS -n -Pn --min-rate 5000 10.10.11.58 -oG allPorts
 ```

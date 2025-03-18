@@ -9,7 +9,7 @@ Machine: https://app.hackthebox.com/machines/484
 
 # Enumeration
 ## Enumeration service / versions 
-- We can use [[content/Tools/Nmap|Nmap]] to enumerate de opened ports
+- We can use [[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]] to enumerate de opened ports
 ```bash
 nmap -p- -sS -n -Pn --min-rate 5000 10.10.11.174 -oG allPorts
 ```
@@ -43,7 +43,7 @@ ldapsearch -x -H ldap://10.10.11.174 -D '' -w '' -b "DC=support,DC=htb"
 >![[Pasted image 20250224174835.png]]
 
 ## SMB
-- Using [[content/Tools/Nmap|Nmap]] we can enumetate the supported dialects, but there is not a lot of info
+- Using [[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]] we can enumetate the supported dialects, but there is not a lot of info
 ```bash
 nmap -p445 -script "smb*" -T5 -n -sS -Pn 10.10.11.174 
 ```

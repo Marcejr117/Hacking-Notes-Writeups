@@ -8,7 +8,7 @@ tags:
 Machine: https://app.hackthebox.com/machines/263
 # Enumeration
 ## Port Scanning
-- using [[content/Tools/Nmap|Nmap]] for service and version scanning
+- using [[content/Tools/Nmap|[[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]] for service and version scanning
 ```bash
 nmap -p- -sSU -n -Pn --min-rate 5000 10.10.10.198 -oG allPorts
 ```

@@ -9,7 +9,7 @@ tags:
 > [!INFO]
 > HTB provides us with some valid credentials `rose / KxEPkKe6R8su`
 
-* As in all penetration test, we start with a [nmap](tools/nmap.md) scan
+* As in all penetration test, we start with a [[[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]] scan
 
 ````bash
 nmap -p- -sS -n -Pn --min-rate 5000 -open 10.10.11.51 -oG allPorts

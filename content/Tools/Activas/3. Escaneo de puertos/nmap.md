@@ -53,7 +53,7 @@ nmap 192.168.1.2,3,4,5,... {parametros}
 - `-A`: es como si usaramos -sVC -O
 - `-sn`: nos permite ejecutar un escaneo de host de una subnet "192.168.1.0/24" sin hacer uno de puertos
 - `-iL <archivo.txt>`: si tenemos un listado de ips podemos hacer el escaneo a todas a la vez
-- `--script=smb*`= [[smb]]
+- `--script=smb*`= [[2. SMB]]
 - `--script=http*`= [[5. HTTP]]
 ---
 outputs

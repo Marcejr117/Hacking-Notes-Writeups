@@ -1,4 +1,4 @@
-Es una herramienta que nos permite enumerar recursos, descargar y subir archivos, con unos credenciales, de [[smb]]
+Es una herramienta que nos permite enumerar recursos, descargar y subir archivos, con unos credenciales
 Mas Ejemplos: #EnumSMB_smbmap 
 #### Ejemplo
 ---

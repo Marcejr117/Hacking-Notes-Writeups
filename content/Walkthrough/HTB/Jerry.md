@@ -12,7 +12,7 @@ Machine: https://app.hackthebox.com/machines/144
 
 # Enumeration
 ## Port Scanning
-- Using [[content/Tools/Nmap|Nmap]] in order to get opended ports and name service
+- Using [[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]] in order to get opended ports and name service
 ```shell
 nmap -p- -sS -n -Pn --min-rate 5000 10.10.10.95 -oG allPorts
 ```

@@ -17,7 +17,7 @@ sudo nmap -p161 -sU -sVC -Pn -n --min-rate 5000 -oG TargetedUDP 10.10.11.48 -ope
 ```
 ![[Pasted image 20241225154411.png]]
 
-Al parecer esta haciendo uso de `snmp` (Info: [Link](https://book.hacktricks.xyz/es/network-services-pentesting/pentesting-snmp)), vamos a realizar una enumeración mas exhaustiva usando [[nmap]]
+Al parecer esta haciendo uso de `snmp` (Info: [Link](https://book.hacktricks.xyz/es/network-services-pentesting/pentesting-snmp)), vamos a realizar una enumeración mas exhaustiva usando [[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]]
 ```bash
 nmap -sUV -p161 --script=snmp\* 10.10.11.48
 ```

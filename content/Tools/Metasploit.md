@@ -1,6 +1,6 @@
 herramienta que permite ejecutar scripts sobre equipos victima
 se puede usar en varios campos como por ejemplo:
-- [[smb]] #EnumSMB_Metasploit 
+-  #EnumSMB_Metasploit 
 
 
 ---

@@ -10,7 +10,7 @@ Machine: https://app.hackthebox.com/machines/BoardLight
 ---
 # Enumeration
 ## Port Scanning
-- As always, we start with a [[content/Tools/Nmap|Nmap]] scan
+- As always, we start with a [[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]] scan
 ```bash
 nmap -p- -sS -n -Pn --min-rate 5000 10.10.11.11 -oG allPorts
 ```

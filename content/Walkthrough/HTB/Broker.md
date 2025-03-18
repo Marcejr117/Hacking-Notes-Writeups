@@ -1,6 +1,6 @@
  #RCE,_CVE-2023-46604,_Privilege_Escalation,_SSH_Key_Theft 
  
-- analizamos con [[nmap]] los puertos y vemos que tenemos un 80 abierto, y si vemos el servicio vemos que es un activemq, asique mirando las claves de inicio por defeco podemos ver que se accede asi
+- analizamos con [[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]] los puertos y vemos que tenemos un 80 abierto, y si vemos el servicio vemos que es un activemq, asique mirando las claves de inicio por defeco podemos ver que se accede asi
 ![[Pasted image 20240114190003 1.png]]
 ![[Pasted image 20240114190124 1.png]]
 

@@ -9,7 +9,7 @@ Machine: https://app.hackthebox.com/machines/452
 
 # Enumeration
 ## Port Scanning
-- Getting the services and versions running 
+- Getting the services and versions running [[content/Tools/Activas/3. Escaneo de puertos/nmap|nmap]] 
 ```bash
 nmap -p- -sS -n -Pn --min-rate 5000 10.10.11.152 -oG allPorts
 ```
