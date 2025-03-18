@@ -5,6 +5,5 @@ tags:
 ---
 https://github.com/dnSpy/dnSpy
 
-Herramienta para hacer ingenieria inversa de un .net (un exe)
+Herramienta para hacer ingeniería inversa de un .net (un exe)
 
-Usado en [[Support]]
