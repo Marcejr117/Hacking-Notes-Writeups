@@ -58,4 +58,18 @@ whatweb http://frizzdc.frizz.htb
 >![[Pasted image 20250319150127.png]]
 >![[Pasted image 20250319150223.png]]
 
-- 
+- Checking the web side we can see the version of the platform, and is vulnerable to LFI: [CVE-2023-34598](https://github.com/Zer0F8th/CVE-2023-34598)
+>[!example]- Result
+>![[Pasted image 20250319153416.png]]
+
+- we can check if this web is vulnerable researching this file `gibbon.sql`
+>[!example]- Result
+>![[Pasted image 20250319153956.png]]
+
+- lets try this PoC
+```bash
+python3 CVE-2023-34598.py scan http://frizzdc.frizz.htb/Gibbon-LMS/
+```
+>[!example]- Result
+>![[Pasted image 20250319154112.png]]
+
