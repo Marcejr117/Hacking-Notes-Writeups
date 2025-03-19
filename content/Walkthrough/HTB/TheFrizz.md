@@ -150,3 +150,10 @@ ahora cone ste usuario podemos que en la papelera de reciclaje hay cosas
 f.frizzle:Jenni_Luvs_Magic23
 m.schoolbus:!suBcig@MehTed!R 
 ```
+
+
+![[Pasted image 20250319194706.png]]
+
+nameserver 80.58.61.250
+nameserver 80.58.61.254
+
