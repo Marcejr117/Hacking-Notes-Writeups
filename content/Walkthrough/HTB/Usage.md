@@ -28,4 +28,13 @@ whatweb http://usage.htb/
 >![[Pasted image 20250320105352.png]]
 >![[Pasted image 20250320105431.png]]
 
-- the web side allow us to register and login,
+- the web side allow us to register, login and there is a "reset password form" and seems to be vulnerable to SQLi
+```bash
+1' or '1' = '1' -- -
+```
+>[!example]- Result
+>![[Pasted image 20250320121039.png]]
+>![[Pasted image 20250320121012.png]]
+
+# Exploitation
+- maybe we can try to get a valid email using a script, 
