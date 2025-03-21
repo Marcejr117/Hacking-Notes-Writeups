@@ -143,3 +143,4 @@ Database name: `usage_blog`
 >[!example]- Result
 >![[Pasted image 20250320184858.png]]
 
+![[Pasted image 20250321011627.png]]
