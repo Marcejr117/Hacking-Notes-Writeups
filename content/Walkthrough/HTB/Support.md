@@ -65,7 +65,7 @@ smbmap -H 10.10.11.174 -u none
 > [!Example]- Result
 > ![[Pasted image 20250224192150.png]]
 
-- Grate, now we can see the shares, and there are some interestrings folder like "support-tools" lets take a look
+- Grate, now we can see the shares, and there are some interesting folders like "support-tools" lets take a look
 ```bash
 smbclient -N //10.10.11.174/support-tools
 ls
