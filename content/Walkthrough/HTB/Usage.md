@@ -177,4 +177,4 @@ decrypted: `admin:whatever1`
 >[!example]- result
 >![[Pasted image 20250323121407.png]]
 
-- If we research we can find a exploit for this version of laravel "10.18.0", [CVE-2021-3129](https://github.com/joshuavanderpoll/CVE-2021-3129)
+- If we research we can find a exploit for this version of Laravel "10.18.0", [CVE-2021-3129](https://github.com/joshuavanderpoll/CVE-2021-3129)
