@@ -177,4 +177,12 @@ decrypted: `admin:whatever1`
 >[!example]- result
 >![[Pasted image 20250323121407.png]]
 
-- If we research we can find a exploit for this version of Laravel "10.18.0", [CVE-2021-3129](https://github.com/joshuavanderpoll/CVE-2021-3129)
+- checking the web side, i see this form, where we can upload a file
+>[!example]- Result
+>![[Pasted image 20250323134215.png]]
+
+- if we can upload a file, it have to be saved in some place, web can use [[gobuster]] in order to find this place (we have to use the cookies)
+
+>[!example]- Result
+>![[Pasted image 20250323140048.png]]
+
