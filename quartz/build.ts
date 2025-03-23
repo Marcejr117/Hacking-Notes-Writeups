@@ -19,6 +19,7 @@ import { options } from "./util/sourcemap"
 import { Mutex } from "async-mutex"
 import DepGraph from "./depgraph"
 import { getStaticResourcesFromPlugins } from "./plugins"
+import { inject } from "@vercel/analytics"
 
 type Dependencies = Record<string, DepGraph<FilePath> | null>
 
@@ -415,6 +416,7 @@ async function rebuildFromEntrypoint(
 
 export default async (argv: Argv, mut: Mutex, clientRefresh: () => void) => {
   try {
+    inject()
     return await buildQuartz(argv, mut, clientRefresh)
   } catch (err) {
     trace("\nExiting Quartz due to a fatal error", err as Error)
