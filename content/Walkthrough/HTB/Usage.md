@@ -182,7 +182,88 @@ decrypted: `admin:whatever1`
 >![[Pasted image 20250323134215.png]]
 
 - if we can upload a file, it have to be saved in some place, web can use [[gobuster]] in order to find this place (we have to use the cookies)
-
+```bash
+gobuster dir -u 'http://admin.usage.htb/' -w /usr/share/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt -c 'XSRF-TOKEN=eyJpdiI6IkNPaU90WmNoT32Uz[snip]oiIn0%3D; laravel_session=eyJpdiI[snip]IjoiIn0%3D; remember_admin_59ba36addc2b2f940158[snip]oiIn0%3D' -t 1 --add-slash| grep -v "Status: 503"
+```
 >[!example]- Result
 >![[Pasted image 20250323140048.png]]
+>![[Pasted image 20250323155855.png]]
+
+- if we upload a file, it appear here
+>[!example]- Result
+>![[Pasted image 20250323160238.png]]
+>![[Pasted image 20250323160249.png]]
+
+# Exploitation 2
+- If we try to upload a php file the web page says that we cant, we can use the ["magic numbers"](https://en.wikipedia.org/wiki/Magic_number_(programming)) in order to get allowed to upload the file, we just have to go with trial and error attempts, using [[hexedit]]
+First bytes: `FFD8 DDE0, FFD8 FFDB or FFD8 FFE1`
+last bytes: `FFD9`
+
+>[!example]- Before
+>![[Pasted image 20250323163334.png]]
+
+>[!example]- Editing
+>![[Pasted image 20250323163713.png]]
+
+>[!example]- After
+>![[Pasted image 20250323164028.png]]
+
+- now we can upload the file
+>[!example]- Result
+>![[Pasted image 20250323164135.png]]
+>![[Pasted image 20250323164145.png]]
+>we change this string to "cmd2.php"
+![[Pasted image 20250323164533.png]]
+![[Pasted image 20250323164602.png]]
+
+- Perfect now we have command execution
+>[!example]- Result
+>![[Pasted image 20250323164632.png]]
+
+- lets get a revershell (you have to be fast, because the file is removed)
+>[!example]- result
+>![[Pasted image 20250323165125.png]]
+
+# Privilege Exalation
+## Enumeration
+- If we check the config files and enviroment files we can see a credentials to get access to the mysql database, is the same database as before
+>[!example]- Result
+>![[Pasted image 20250323170257.png]]
+
+Credentials: `staff:s3cr3t_c0d3d_1uth`
+DB Name: `usage_blog`
+
+- we can exfiltrate more users, but we cant use it
+>[!example]- Result
+>![[Pasted image 20250323170635.png]]
+
+Credentials:
+`raj:raj@raj.com:xander`
+`raj:raj@usage.com:xander`
+
+- after looking for something interesting i see this file `.monitrc` and looks like there is a password of a http service running on port 2812, 
+>[!example]- Result
+>![[Pasted image 20250323180444.png]]
+
+Creds: `admin:3nc0d3d_pa$$w0rd`
+
+- we can check if this service works, sending a request
+```bash
+echo -e "HEAD / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n" | nc localhost 2812
+```
+>[!example]- Result
+>![[Pasted image 20250323182923.png]]
+
+- in order to work better we can port forwarding this port (local port forwarding), and we can use SSH (because there is a id_rsa)
+```bash
+chmod 600 id_rsa
+ssh -L 1234:10.10.16.7:2812 dash@10.10.11.18 -i id_rsa
+```
+>[!example]- Result
+>![[Pasted image 20250323183250.png]]
+>![[Pasted image 20250323183947.png]]
+
+- perfect now we can get access to this service
+>[!example]- Result
+>![[Pasted image 20250323184532.png]]
 
