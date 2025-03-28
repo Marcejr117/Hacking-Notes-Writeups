@@ -415,7 +415,6 @@ async function rebuildFromEntrypoint(
 
 export default async (argv: Argv, mut: Mutex, clientRefresh: () => void) => {
   try {
-    inject()
     return await buildQuartz(argv, mut, clientRefresh)
   } catch (err) {
     trace("\nExiting Quartz due to a fatal error", err as Error)
