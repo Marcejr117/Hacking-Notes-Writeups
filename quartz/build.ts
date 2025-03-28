@@ -19,7 +19,6 @@ import { options } from "./util/sourcemap"
 import { Mutex } from "async-mutex"
 import DepGraph from "./depgraph"
 import { getStaticResourcesFromPlugins } from "./plugins"
-import { inject } from "@vercel/analytics"
 
 type Dependencies = Record<string, DepGraph<FilePath> | null>
 
