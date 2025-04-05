@@ -54,3 +54,38 @@ Subdomain: `api.heal.htb`
 >![[Pasted image 20250405145808.png]]
 
 
+## Enumeration 2: Web Page (Logged)
+- Lets try to signup
+>[!example]- View
+>![[Pasted image 20250405161550.png]]
+>![[Pasted image 20250405161609.png]]
+
+- looks like know we can: make a resume, take a survey, or check/logout 
+>[!example]- View
+>Resume:
+>![[Pasted image 20250405162038.png]]
+>Survey (new subdomain):
+>![[Pasted image 20250405162111.png]]
+>Profile:
+>![[Pasted image 20250405162156.png]]
+
+- checking the profile we can see that we are not marked as admin, researching i found that the authorization token is a JWT (JSON Web Token)
+>[!example]- View
+>![[Pasted image 20250405163446.png]]
+
+- The resume builder return a PDF with the data parsed
+>[!example]- View
+>![[Pasted image 20250405164927.png]]
+
+- checking the request using [[caido]] we see this request
+>[!example]- View
+>![[Pasted image 20250405170055.png]]
+
+## Exploitation: LFI
+- The previus request looks like vulnerable to LFI
+>[!example]- View
+>![[Pasted image 20250405170421.png]]
+
+- Perfect now we have a LFI, lets get the server users: `/download?filename=../../../../../../etc/passwd` (looking this file i think that there are a postgres database running)
+Users: `ralph, postgres, ron`
+
