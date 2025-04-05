@@ -38,6 +38,19 @@ whatweb http://heal.htb/
 >![[Pasted image 20250405135019.png]]
 >![[Pasted image 20250405135043.png]]
 
-### Directories
-- Using [[gobuster]] we can brute force some extra directories
-- 
+### Crawling
+- We can use a proxy like [[caido]] in order to see the web structure and subdomains while we are using the web page
+>[!example]- View
+>![[Pasted image 20250405145206.png]]
+
+Subdomain: `api.heal.htb`
+
+- so we add him to the  `/etc/hosts`
+>[!example]- View
+>![[Pasted image 20250405145739.png]]
+
+- now we can use the login form
+>[!example]- Result
+>![[Pasted image 20250405145808.png]]
+
+
