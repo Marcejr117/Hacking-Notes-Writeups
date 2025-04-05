@@ -1,6 +1,6 @@
 ---
 title: Heal
-draft: true
+draft: false
 tags:
 ---
 ![[Heal.png]]
