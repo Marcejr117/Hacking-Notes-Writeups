@@ -16,7 +16,7 @@ nmap -p- -sS -n -Pn --min-rate 5000 -open 10.10.11.51 -oG allPorts
 ````
 
 > [!info]- Result
-> ![Pasted image 20250216204247.png](../../assets/Pasted%20image%2020250216204247.png)
+> ![Pasted image 20250216204247.png](Pasted%20image%2020250216204247.png)
 
 * Now we now that the target machine is a windows enviroment, lets preforme some version scan and use some commons scripts against this ports
 
@@ -26,8 +26,8 @@ sudo nmap -p 53,88,135,139,389,445,464,593,636,1433,3268,3269,5985,9389,47001,49
 
 
 >[!info]- Result
->![Pasted image 20250216205045.png](../../assets/Pasted%20image%2020250216205045.png) 
->![Pasted image 20250216205113.png](../../assets/Pasted%20image%2020250216205113.png)
+>![Pasted image 20250216205045.png](Pasted%20image%2020250216205045.png) 
+>![Pasted image 20250216205113.png](Pasted%20image%2020250216205113.png)
 
 * So we have this information to be highlighted
   * we are in front of a Domain controller (DC01.sequel.htb)

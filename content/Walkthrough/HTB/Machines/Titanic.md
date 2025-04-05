@@ -42,10 +42,10 @@ services:
 
 ````
 
-![Pasted image 20250221112231.png](../../assets/Pasted%20image%2020250221112231.png)
+![Pasted image 20250221112231.png](Pasted%20image%2020250221112231.png)
 so de structure is `/home/developer/gitea/data/gitea/<datos>` and the defatul gitea confing file is in `conf/app.ini` so lets check it, (because we have a path travertal vector)
-![Pasted image 20250221113624.png](../../assets/Pasted%20image%2020250221113624.png)
-![Pasted image 20250221113815.png](../../assets/Pasted%20image%2020250221113815.png)
+![Pasted image 20250221113624.png](Pasted%20image%2020250221113624.png)
+![Pasted image 20250221113815.png](Pasted%20image%2020250221113815.png)
 nice now we can preform a crack attack
 
 ````txt
@@ -61,7 +61,7 @@ but we have to change the structure of the hash (https://exploit-notes.hdks.org/
 python3 gitea2hashcat.py ../_home_developer_gitea_data_gitea_gitea.db
 ````
 
-![Pasted image 20250221120029.png](../../assets/Pasted%20image%2020250221120029.png)
+![Pasted image 20250221120029.png](Pasted%20image%2020250221120029.png)
 
 now we can use hashcat
 
@@ -69,7 +69,7 @@ now we can use hashcat
 hashcat --username giteaHashes /usr/share/wordlists/rockyou.txt
 ````
 
-![Pasted image 20250221133550.png](../../assets/Pasted%20image%2020250221133550.png)
+![Pasted image 20250221133550.png](Pasted%20image%2020250221133550.png)
 
 * perfect lets try it in a ssh connection\]
 
@@ -77,4 +77,4 @@ hashcat --username giteaHashes /usr/share/wordlists/rockyou.txt
 ssh developer@10.10.11.55
 ````
 
-![Pasted image 20250221133843.png](../../assets/Pasted%20image%2020250221133843.png)
+![Pasted image 20250221133843.png](Pasted%20image%2020250221133843.png)
