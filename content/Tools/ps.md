@@ -1,1 +1,0 @@
-muestra los procesos actuales que están corriendo

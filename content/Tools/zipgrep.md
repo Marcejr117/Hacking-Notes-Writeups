@@ -1,1 +1,0 @@
-nos permite extraer una parte de un archivo comprimido especificando una palabra y nos buscara dentro de los archivos y mostrara todas las lineas donde este esa palabra

@@ -1,1 +1,0 @@
-te permite ver lo procesos que están entrando y ejecutándose y te pone los recursos que esta consumiente
