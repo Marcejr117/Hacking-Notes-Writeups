@@ -1,0 +1,1 @@
+te nombra de que tipo de archivo se trata
