@@ -22,6 +22,13 @@ nmap -p22,80 -sVC -n -Pn 10.10.11.220 --min-rate 5000
 
 
 
+
 ----
 # Cosas  para analizar
 - De donde sale esto: `')/**/UNION/**/SELECT/**/1,2,3,4,5--`
+cat ./app/Http/Controllers/GalleryController.php
+![[Pasted image 20250412012601.png]]
+![[Pasted image 20250412014619.png]]
+![[Pasted image 20250412021020.png]]
+![[Pasted image 20250412023344.png]]
+
