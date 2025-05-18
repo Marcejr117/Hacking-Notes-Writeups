@@ -2,7 +2,7 @@
 title: Heal
 draft: false
 tags: 
-socialImage: https://www.jr117.com.es/assets/Heal.png
+socialImage: static/og-image.png
 socialDescription: Heal Writeup
 ---
 ![[Heal.png]]
