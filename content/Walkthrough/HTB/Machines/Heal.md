@@ -1,7 +1,8 @@
 ---
 title: Heal
 draft: false
-tags:
+tags: 
+socialImage: content/assets/Heal.png
 ---
 ![[Heal.png]]
 
