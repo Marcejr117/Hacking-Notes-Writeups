@@ -2,7 +2,7 @@
 title: Heal
 draft: false
 tags: 
-socialImage: /static/og-image.png
+socialImage: static/og-image.png
 socialDescription: Heal Writeup
 ---
 ![[Heal.png]]
