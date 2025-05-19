@@ -4,8 +4,8 @@ draft: false
 tags:
   - medium
   - Linux
-socialImage: https://www.jr117.com.es/assets/Heal.png
-socialDescription: Heal Writeup
+socialImage: https://www.jr117.com.es/assets/Pasted image 20250519125129.png
+socialDescription: "Walkthrough de Heal (HTB): escaneo de puertos y reconocimiento web con Nmap y WhatWeb, explotación de LFI y manipulación de JWT, crackeo de hashes SQLite con John, RCE vía plugin malicioso en LimeSurvey y escalada a root con exploit de Consul."
 ---
 ![[Heal.png]]
 
