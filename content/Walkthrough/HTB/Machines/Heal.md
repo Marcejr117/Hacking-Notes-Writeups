@@ -1,8 +1,10 @@
 ---
 title: Heal
 draft: false
-tags: 
-socialImage: /content/assets/Pasted image 20250519122437.png
+tags:
+  - medium
+  - Linux
+socialImage: https://www.jr117.com.es/assets/Heal.png
 socialDescription: Heal Writeup
 ---
 ![[Heal.png]]
