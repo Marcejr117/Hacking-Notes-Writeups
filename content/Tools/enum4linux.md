@@ -1,4 +1,4 @@
-Es una herramienta utilizada para extraer información de hosts de Windows y Samba. Utiliza las herramientas de Samba [[smbclient]], [[rpclient]], [[net]] y [[nslookup]].
+Es una herramienta utilizada para extraer información de hosts de Windows y Samba. Utiliza las herramientas de Samba [[smbclient]], [[rpcclient]], [[net]] y [[nslookup]].
 Ejemplos de uso: #EnumSMB_enum4linux 
 Las características de `Enum4linux` incluyen
 - Enumeración de recursos compartidos.
