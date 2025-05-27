@@ -121,7 +121,7 @@ smbmap -H 10.10.10.175 -u 'fsmith' -p 'Thestrokes23'
 
 
 ## BloodHaund
-- we can get all info using [[bloodhaund-python]] and then import it to [[bloodhaunt]]
+- we can get all info using [[bloodhaund-python]] and then import it to [[../../../Tools/BloodHound|BloodHound]]
 ```bash
 bloodhound-python -d EGOTISTICAL-BANK.LOCAL -u 'fsmith' -p 'Thestrokes23' -c ALL -ns 10.10.10.175 --dns-tcp
 ```

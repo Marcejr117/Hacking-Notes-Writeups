@@ -77,7 +77,7 @@ john kerb.txt --wordlist=/usr/share/wordlists/rockyou.txt
 bloodhound-python -d sequel.htb -u rose -p KxEPkKe6R8su -c ALL -ns 10.10.11.51
 ````
 
-* And then import it to [bloodhaunt](tools/bloodhaunt.md), and we can see that there are only a user with admin rights
+* And then import it to [BloodHound](../../../Tools/BloodHound.md), and we can see that there are only a user with admin rights
   ![Pasted image 20250219192824.png](../../../../assets/Pasted%20image%2020250219192824.png)
 
 There are 8 domain users
@@ -91,7 +91,7 @@ There are 8 domain users
 
 ## certipy-ad enumeration
 
-* we can twerk certipy to enumerate data in [bloodhaunt](tools/bloodhaunt.md) format (and then we can import it)
+* we can twerk certipy to enumerate data in [BloodHound](../../../Tools/BloodHound.md) format (and then we can import it)
 
 ````bash
 certipy find -bloodhound -vulnerable -ns 10.10.11.51 -dc-ip 10.10.11.51 -u rose@sequel.htb -p 'KxEPkKe6R8su'
@@ -206,7 +206,7 @@ evil-winrm --ip 10.10.11.51 --user ryan --password WqSZAF6CysDQbGb3
 
 # Privilege Escalation
 
-* if we check [bloodhaunt](tools/bloodhaunt.md) we can see that ryan has (as first degree object control) writeOwner over `CA_SVC` user
+* if we check [BloodHound](../../../Tools/BloodHound.md) we can see that ryan has (as first degree object control) writeOwner over `CA_SVC` user
   ![Pasted image 20250220125521.png](../../../../assets/Pasted%20image%2020250220125521.png)
 
 If we have WriteOwner over a:

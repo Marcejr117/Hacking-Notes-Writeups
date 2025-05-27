@@ -265,7 +265,7 @@ crackmapexec smb 10.10.11.174 -u 'support' -p 'Ironside47pleasure40Watchful'
 ldapdomaindump 10.10.11.174 -u 'support\ldap' -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' --authtype SIMPLE
 ```
 
-or (and then import the result into [[BloodHaund]])
+or (and then import the result into [[../../../Tools/BloodHound]])
 ```bash
 bloodhound-python -d support.htb -u 'ldap' -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -c ALL -ns 10.10.11.174 --dns-tcp
 ```
@@ -287,7 +287,7 @@ crackmapexec winrm 10.10.11.174 -u 'support' -p 'Ironside47pleasure40Watchful'
 >![[Pasted image 20250225165347.png]]
 
 # Privilege Escalation
-- If we check the [[BloodHaund]] diagram we can see that we are part of the group 'shared support accounts' and if we check this group, we see that have full control over the DC0 (DC machine)
+- If we check the [[../../../Tools/BloodHound]] diagram we can see that we are part of the group 'shared support accounts' and if we check this group, we see that have full control over the DC0 (DC machine)
 >[!example]- Result
 >![[Pasted image 20250225172951.png]]
 

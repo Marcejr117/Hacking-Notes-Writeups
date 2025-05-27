@@ -1,8 +1,11 @@
-es una herramienta para visualizar como esta dispuesto un entorno AD 
+es una herramienta para encontrar miss configurations en entornos de AD, asi como ver la jerarquía del AD
+https://github.com/SpecterOps/BloodHound
 
-https://github.com/SpecterOps/BloodHound-Legacy
+ej: [[2. AD Enumeration; BloodHound]]
+![[Pasted image 20250217230008.png]]
 
 # Instalacion
+https://github.com/SpecterOps/BloodHound-Legacy
 ```bash
 sudo apt install bloodhaunt
 sudo apt-get install apt-transport-https

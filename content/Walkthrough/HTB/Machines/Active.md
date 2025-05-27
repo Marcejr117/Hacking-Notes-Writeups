@@ -94,7 +94,7 @@ ldapdomaindump 10.10.10.100 -u 'active.htb\svc_tgs' -p 'GPPstillStandingStrong2k
 >![[Pasted image 20250311024510.png]]
 
 ## Bloodhound
-- Using [[bloodhaund-python]] and [[bloodhaunt]] to get a better view of the AD enviroment
+- Using [[bloodhaund-python]] and [[../../../Tools/BloodHound]] to get a better view of the AD enviroment
 ```bash
 bloodhound-python -d active.htb -u 'svc_tgs' -p 'GPPstillStandingStrong2k18' -c ALL -ns 10.10.10.100 --dns-tcp
 ```
