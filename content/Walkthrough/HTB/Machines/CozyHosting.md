@@ -19,7 +19,7 @@ gobuster dir -u http://cozyhosting.htb/ -w /usr/share/seclists/Discovery/DNS/sub
 
 	ahora podemos ver mas paginas:![[Pasted image 20230918135727.png]]
 	pero no parece ser nada importe
-	no obstante vamos a usar ahora [[dirSearch]] 
+	no obstante vamos a usar ahora [[../../../Tools/Enumeration/dirSearch|dirSearch]] 
 	```bash
 	dirsearch -u http://cozyhosting.htb/
 ```
