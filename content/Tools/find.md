@@ -37,3 +37,8 @@ find ./ -name \*config\* -exec grep -l "pass" {} \; 2>/dev/null
 ```bash
 find / -type f -writable -user root -depth 2>/dev/null | grep -vE "sys\/|proc\/"
 ```
+
+- buscar logs del grupo adm con password
+```bash
+find / \( -name "*.conf*" -o -name "*.log*" -o -name "*.txt*" \) -group adm 2>/dev/null -exec grep -l "password" {} \;
+```
