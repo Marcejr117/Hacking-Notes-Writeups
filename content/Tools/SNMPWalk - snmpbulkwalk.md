@@ -1,5 +1,5 @@
 
-- `snmpwalk` y `snmpbulkwalk` son herramientas de línea de comandos que se utilizan para recuperar datos de un agente SNMP en Linux, pero tienen diferencias importantes en cómo obtienen los datos y en qué situaciones son más efectivas.
+- `snmpwalk` y `snmpbulkwalk` son herramientas de línea de comandos que se utilizan para recuperar datos de un agente SNMP, pero tienen diferencias importantes en cómo obtienen los datos y en qué situaciones son más efectivas.
 
 ```bash
 snmpbulkwalk -c [COMM_STRING] -v [VERSION] [IP] . #Don't forget the final dot
