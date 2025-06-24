@@ -23,7 +23,7 @@ nmap -sUV -p161 --script=snmp\* 10.10.11.48
 ```
 ![[Pasted image 20241225204711.png]]
 
-tenemos informacion interesante pero aun no es sufiente, ahora con [[SNMPWalk - snmpbulkwalk]] (la version que vamos a usar es la 1 ya que no tenemos credeciales para autenticarnos en la version 3)
+tenemos informacion interesante pero aun no es sufiente, ahora con [[../../../Tools/snmpwalk - snmpbulkwalk]] (la version que vamos a usar es la 1 ya que no tenemos credeciales para autenticarnos en la version 3)
 ```bash
 nmpwalk -v 1 -c public 10.10.11.48 .1
 ```
