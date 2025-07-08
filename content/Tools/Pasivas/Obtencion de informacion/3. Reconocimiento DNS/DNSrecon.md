@@ -14,6 +14,10 @@ dsnrecon.py -d dominio.com
 
 ![[Pasted image 20231016112339.png]]
 
+```bash
+dnsrecon -d inlanefreight.com -n ns.inlanefreight.com
+```
+
 ---
 para instalarlo descargamos el repositorio lo copiamos a /opt y luego lo ponemos en la zshrc
 ![[Pasted image 20231016113940.png]]
