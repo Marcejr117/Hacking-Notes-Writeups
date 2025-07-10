@@ -1,5 +1,6 @@
 {
   "cleanUrls": true,
+  "outputDirectory": "public",
   "env": {
     "GITHUB_REPO_CLONE_TOKEN": "@GITHUB_REPO_CLONE_TOKEN"
   }
