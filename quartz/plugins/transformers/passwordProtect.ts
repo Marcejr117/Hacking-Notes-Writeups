@@ -104,14 +104,33 @@ export const PasswordProtect: QuartzTransformerPlugin = () => {
                   });
                 }
 
+                function ensureCryptoJsAndAttach() {
+                  if (typeof CryptoJS !== 'undefined') {
+                    attachHandlers();
+                  } else {
+                    // Busca el script externo de CryptoJS
+                    var script = document.querySelector('script[src*="crypto-js"]');
+                    if (script) {
+                      script.addEventListener('load', attachHandlers, { once: true });
+                    } else {
+                      // Si no está el script, intenta cargarlo manualmente
+                      var newScript = document.createElement('script');
+                      newScript.src = 'https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js';
+                      newScript.defer = true;
+                      newScript.addEventListener('load', attachHandlers, { once: true });
+                      document.head.appendChild(newScript);
+                    }
+                  }
+                }
+
                 // first run after full load
                 if (document.readyState === 'complete') {
-                  attachHandlers();
+                  ensureCryptoJsAndAttach();
                 } else {
-                  window.addEventListener('load', attachHandlers, { once: true });
+                  window.addEventListener('load', ensureCryptoJsAndAttach, { once: true });
                 }
                 // run on every SPA navigation
-                document.addEventListener('nav', attachHandlers);
+                document.addEventListener('nav', ensureCryptoJsAndAttach);
               })();
             `,
             )
