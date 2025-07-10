@@ -24,4 +24,9 @@ function setupCallout() {
   }
 }
 
+setupCallout()
+
 document.addEventListener("nav", setupCallout)
+
+// Exponer setupCallout en window para uso externo
+window.setupCallout = setupCallout
