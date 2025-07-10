@@ -1,6 +1,6 @@
 {
     "cleanUrls": true,
     "env": {
-	"GIT_TOKEN": "@GITHUB_REPO_CLONE_TOKEN"
+		"GIT_TOKEN": "@GITHUB_REPO_CLONE_TOKEN"
     }
 }
