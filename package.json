@@ -45,6 +45,7 @@
     "async-mutex": "^0.5.0",
     "chokidar": "^4.0.3",
     "cli-spinner": "^0.2.10",
+    "crypto-js": "^4.2.0",
     "d3": "^7.9.0",
     "esbuild-sass-plugin": "^3.3.1",
     "flexsearch": "0.7.43",
@@ -99,6 +100,7 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/d3": "^7.4.3",
     "@types/hast": "^3.0.4",
     "@types/js-yaml": "^4.0.9",

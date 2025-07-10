@@ -1,6 +1,7 @@
 ---
 title: EscapeTwo
 draft: false
+password: jiji
 tags:
 ---
 

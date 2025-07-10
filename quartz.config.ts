@@ -75,6 +75,8 @@ const config: QuartzConfig = {
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
+      // Protect pages that declare a `password` in their front-matter
+      Plugin.PasswordProtect(),
     ],
     filters: [Plugin.RemoveDrafts()],
     emitters: [
