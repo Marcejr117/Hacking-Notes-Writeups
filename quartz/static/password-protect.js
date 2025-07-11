@@ -77,14 +77,14 @@
         function decrypt() {
             const pwd = input ? input.value.trim() : '';
             if (!pwd) {
-                if (errorEl) errorEl.textContent = 'Por favor ingresa una contraseña';
+                if (errorEl) errorEl.textContent = 'Please enter a password';
                 return;
             }
 
             try {
                 const attemptHash = CryptoJS.SHA256(pwd).toString();
                 if (attemptHash !== storedHash) {
-                    if (errorEl) errorEl.textContent = 'Contraseña incorrecta';
+                    if (errorEl) errorEl.textContent = 'Incorrect password';
                     if (input) input.value = '';
                     return;
                 }
@@ -92,7 +92,7 @@
                 const bytes = CryptoJS.AES.decrypt(cipherText, attemptHash);
                 const html = bytes.toString(CryptoJS.enc.Utf8);
                 if (!html) {
-                    if (errorEl) errorEl.textContent = 'Error al desencriptar el contenido';
+                    if (errorEl) errorEl.textContent = 'Error decrypting content';
                     if (input) input.value = '';
                     return;
                 }
@@ -115,7 +115,7 @@
                 }
 
             } catch (e) {
-                if (errorEl) errorEl.textContent = 'Error al desencriptar el contenido';
+                if (errorEl) errorEl.textContent = 'Error decrypting content';
                 if (input) input.value = '';
             }
         }

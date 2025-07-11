@@ -74,7 +74,7 @@ export const PasswordProtect: QuartzTransformerPlugin = () => {
                 h("input", {
                   id: "pwd-input",
                   type: "password",
-                  placeholder: "Enter root flag 🔑",
+                  placeholder: "Enter NTLM hash or Root's shadow hash🔑",
                   style: `
                     padding: 0.5rem 1rem;
                     border-radius: 6px;

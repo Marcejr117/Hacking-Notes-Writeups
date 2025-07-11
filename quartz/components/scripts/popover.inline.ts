@@ -108,9 +108,9 @@ async function mouseEnterHandler(
           <div style="margin-bottom: 0.5rem;">
             <span style="font-size: 1.5rem;">🔒</span>
           </div>
-          <h3 style="margin: 0 0 0.5rem 0; color: var(--secondary);">Página Protegida</h3>
+          <h3 style="margin: 0 0 0.5rem 0; color: var(--secondary);">Protected Page</h3>
           <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">
-            Esta página está bloqueada por contraseña
+            This page is password protected
           </p>
         `
         popoverInner.appendChild(protectedMessage)
