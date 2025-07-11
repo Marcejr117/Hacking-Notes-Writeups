@@ -91,15 +91,41 @@ async function mouseEnterHandler(
       const contents = await response.text()
       const html = p.parseFromString(contents, "text/html")
       normalizeRelativeURLs(html, targetUrl)
-      // prepend all IDs inside popovers to prevent duplicates
-      html.querySelectorAll("[id]").forEach((el) => {
-        const targetID = `popover-internal-${el.id}`
-        el.id = targetID
-      })
-      const elts = [...html.getElementsByClassName("popover-hint")]
-      if (elts.length === 0) return
+      
+      // Verificar si la página está protegida por contraseña
+      const hasPasswordModal = html.querySelector('#pwd-modal-overlay') !== null
+      
+      if (hasPasswordModal) {
+        // Página protegida por contraseña - mostrar mensaje especial
+        const protectedMessage = document.createElement("div")
+        protectedMessage.style.cssText = `
+          padding: 1rem;
+          text-align: center;
+          color: var(--dark);
+          font-family: var(--bodyFont);
+        `
+        protectedMessage.innerHTML = `
+          <div style="margin-bottom: 0.5rem;">
+            <span style="font-size: 1.5rem;">🔒</span>
+          </div>
+          <h3 style="margin: 0 0 0.5rem 0; color: var(--secondary);">Página Protegida</h3>
+          <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">
+            Esta página está bloqueada por contraseña
+          </p>
+        `
+        popoverInner.appendChild(protectedMessage)
+      } else {
+        // Página normal - mostrar preview normal
+        // prepend all IDs inside popovers to prevent duplicates
+        html.querySelectorAll("[id]").forEach((el) => {
+          const targetID = `popover-internal-${el.id}`
+          el.id = targetID
+        })
+        const elts = [...html.getElementsByClassName("popover-hint")]
+        if (elts.length === 0) return
 
-      elts.forEach((elt) => popoverInner.appendChild(elt))
+        elts.forEach((elt) => popoverInner.appendChild(elt))
+      }
   }
 
   if (!!document.getElementById(popoverId)) {
