@@ -1,3 +1,7 @@
+instalacion:
+[Tenable Nessus Download](https://www.tenable.com/products/nessus/select-your-operating-system)
+
+
 es una suite de herramienta que nos permite identificar vulnerabilidaes de aplicaciones o sistemas
 Debemos poner el rango de ip que vamos a analizar:
 ![[Pasted image 20231208222425.png]]
