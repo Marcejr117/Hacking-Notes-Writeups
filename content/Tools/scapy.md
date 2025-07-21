@@ -1,5 +1,9 @@
-es como el nmap pero para ver las cosas a bajo nivel (es una biblioteca de python), para hacer un scaneo de puertos desde python (hacer un script custom)
+Es como el nmap pero para ver las cosas a bajo nivel (es una biblioteca de python), para hacer un scaneo de puertos desde python (hay que hacer un script custom en python), esta biblioteca la usa [[ReconSpider]] para funcionar
 
+# installation
+```shell-session
+pip3 install scrapy
+```
 
 
 asi es como hace los paquetes 
