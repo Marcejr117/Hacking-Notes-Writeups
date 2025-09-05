@@ -89,7 +89,7 @@ find -L . -type f ! -name "*.jar" ! -name "*.xed" ! -name "*.vm" -exec grep -iI 
 >[!example]- Show
 >![[../../../assets/Pasted image 20250905092946.png]]
 
-# Lateral Movement (xwiki -> oliver )
+# Lateral Movement (xwiki ➔ oliver )
 - we cant pivot to this user using `su` command but if we use SSH service we can login
 ```bash
 ssh oliver@10.10.11.80
@@ -116,7 +116,7 @@ nc -nv 127.0.0.1 19999
 
 - There are a http server running "Netdata Embedded HTTP Server v1.45.2", this version allow us to perform privilege escalation
 
-# Privilege escalation (oliver -> root)
+# Privilege escalation (oliver ➔ root)
 
 - Lets exploit this vuln "CVE-2024-32019" first we need to locate `/opt/netdata/usr/libexec/netdata/plugins.d/ndsudo` (that has SUID) and we can execute it:
 
