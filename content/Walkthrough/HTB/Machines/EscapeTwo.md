@@ -3,7 +3,6 @@ title: EscapeTwo
 draft: false
 tags:
 ---
-
 # Enumeration
 
 > [!INFO]
