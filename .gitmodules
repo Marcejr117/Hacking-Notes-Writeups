@@ -3,4 +3,4 @@
 	url = https://github.com/Marcejr117/Hacking-Note-Writeups-assets.git
 [submodule "content/Walkthrough"]
 	path = content/Walkthrough
-	url = https://${GITHUB_REPO_CLONE_TOKEN}@github.com/Marcejr117/Hacking-Notes-Writeups-Walkthrough.git
+	url = https://github.com/Marcejr117/Hacking-Notes-Writeups-Walkthrough.git
