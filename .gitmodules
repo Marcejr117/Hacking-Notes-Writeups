@@ -3,5 +3,5 @@
 	url = https://github.com/Marcejr117/Hacking-Note-Writeups-assets.git
 [submodule "content/Walkthrough"]
 	path = content/Walkthrough
-	url = git@github.com:Marcejr117/Hacking-Notes-Writeups-Walkthrough.git
+	url = https://github.com/Marcejr117/Hacking-Note-Writeups-Walkthrough.git
 	branch = main
