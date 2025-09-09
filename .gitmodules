@@ -2,3 +2,6 @@
 	path = content/assets
 	url = https://github.com/Marcejr117/Hacking-Note-Writeups-assets.git
 
+[submodule "content/walkthrough"]
+	path = content/walkthrough
+	url = https://github.com/Marcejr117/Hacking-Notes-Writeups-Walkthrough.git
