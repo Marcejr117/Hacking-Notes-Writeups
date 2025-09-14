@@ -14,7 +14,7 @@ This plugin accepts the following configuration options:
 - `comments`: If `true` (default), enables parsing of `%%` style Obsidian comment blocks.
 - `highlight`: If `true` (default), enables parsing of `==` style highlights within content.
 - `wikilinks`:If `true` (default), turns [[wikilinks]] into regular links.
-- `callouts`: If `true` (default), adds support for [[callouts|callout]] blocks for emphasizing content.
+- `callouts`: If `true` (default), adds support for [[../features/callouts|callout]] blocks for emphasizing content.
 - `mermaid`: If `true` (default), enables [[Mermaid diagrams|Mermaid diagram]] rendering within Markdown files.
 - `parseTags`: If `true` (default), parses and links tags within the content.
 - `parseArrows`: If `true` (default), transforms arrow symbols into their HTML character equivalents.
