@@ -1,0 +1,1 @@
+Herramienta para obtener el shell code de un binario
