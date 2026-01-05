@@ -76,7 +76,16 @@ new ActiveXObject('WScript.Shell').Run("powershell -e <base64_payload>");
 
 Another attribute of shortcut files is that even with “Hide Extensions for Known File Types” disabled, shortcut files never show the “.lnk” extension. This can ease phishing attacks as the shortcut and the actual file are almost identical in appearance.
 ![[../../assets/Pasted image 20260105124756.png]]
-https://github.com/d4rkiZ/EmbedExeLnk-
+Example: https://github.com/d4rkiZ/EmbedExeLnk-
+
+LNK file structure looks like this
+![[../../assets/Pasted image 20260105155550.png]]
+- LINKTARGET_IDLIST: A list of shell items (See [Additional Resources](https://unit42.paloaltonetworks.com/lnk-malware/?utm_source=chatgpt.com#post-144445-_glwf23prihdj)) specifying the target.
+- RELATIVE_PATH: The relative path of the target with respect to the LNK location.
+- COMMAND_LINE_ARGUMENTS: Arguments passed to the target.
+
+
+---
 # WikiLinks
 - https://docs.redteamleaders.com/offensive-security/initial-access/weaponized-lnk-files-for-initial-access-and-delivery
 - https://unit42.paloaltonetworks.com/lnk-malware/
