@@ -93,4 +93,3 @@ LNK file structure looks like this
 - https://github.com/d4rkiZ/EmbedExeLnk-
 - https://3354902.hs-sites.com/hubfs/Insights/Research/threat-analysis-purple-team-taking-shortcuts-LNK-files.pdf?hsCtaAttrib=137696196204
 - https://cloud.tencent.com/developer/article/1946315
-- 
