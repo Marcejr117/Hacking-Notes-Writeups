@@ -1,3 +1,12 @@
+---
+title: LNK Files
+draft: false
+tags:
+socialImage:
+socialDescription:
+date: 2025-12-27
+modified: 2026-01-10
+---
 # Using LNK to execute .hta 
 - We can use LNK file in order to execute PowerShell and then download and load a `.hta` that download the ReverShell
 
