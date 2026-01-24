@@ -8,7 +8,7 @@ la idea es que chisel tiene que correr como servidor en nuestra maquina y como c
 	![[{9D010EC3-B034-4B6B-9B6A-D3370D6A8E98}.png]]
 	![[{EB4D61A8-82BB-453B-9CB9-30B0D21D1378}.png]]
 
-- cliente
+- cliente (local port forwarding)
 
 ![[Pasted image 20240524231859.png]]
 - server
