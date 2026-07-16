@@ -19,12 +19,22 @@ concurrency:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      SUBMODULES_TOKEN: ${{ secrets.SUBMODULES_TOKEN }}
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          submodules: recursive
-          token: ${{ secrets.SUBMODULES_TOKEN }}
+
+      - name: Checkout private content submodules
+        if: ${{ env.SUBMODULES_TOKEN != '' }}
+        env:
+          GITHUB_REPO_CLONE_TOKEN: ${{ env.SUBMODULES_TOKEN }}
+        run: bash scripts/vercel-install.sh
+
+      - name: Warn when private content is unavailable
+        if: ${{ env.SUBMODULES_TOKEN == '' }}
+        run: echo "::warning::SUBMODULES_TOKEN is not configured; building public root content only."
 
       - name: Setup Node
         uses: actions/setup-node@v6
