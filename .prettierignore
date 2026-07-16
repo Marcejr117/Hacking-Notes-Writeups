@@ -1,3 +1,7 @@
 public
 node_modules
 .quartz-cache
+.quartz
+content
+templates
+plugins/password-protect

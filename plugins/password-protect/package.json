@@ -1,0 +1,121 @@
+{
+  "name": "@local/password-protect",
+  "version": "0.1.0",
+  "description": "Password-protected pages for Quartz with plain password and SHA-256 passwordHash frontmatter support.",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier . --check",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run lint && npm run format && npm run test"
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0",
+    "vfile": "^6.0.3"
+  },
+  "peerDependenciesMeta": {
+    "preact": {
+      "optional": false
+    },
+    "vfile": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@quartz-community/types": "github:quartz-community/types",
+    "@quartz-community/utils": "github:quartz-community/utils"
+  },
+  "devDependencies": {
+    "@types/hast": "^3.0.4",
+    "@types/node": "^24.10.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "hast-util-to-html": "^9.0.4",
+    "preact": "^10.28.2",
+    "prettier": "^3.6.2",
+    "sass": "^1.97.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "unified": "^11.0.5",
+    "vfile": "^6.0.3",
+    "vitest": "^2.1.9"
+  },
+  "quartz": {
+    "name": "password-protect",
+    "displayName": "Password Protect",
+    "category": [
+      "transformer",
+      "emitter"
+    ],
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultOrder": 900,
+    "defaultEnabled": true,
+    "defaultOptions": {
+      "iterations": 600000,
+      "passwordField": "password",
+      "passwordHashField": "passwordHash",
+      "unlistWhenEncrypted": false,
+      "outputPath": "static/passwordProtectContentIndex.json"
+    },
+    "optionSchema": {
+      "iterations": {
+        "type": "number"
+      },
+      "passwordField": {
+        "type": "string"
+      },
+      "passwordHashField": {
+        "type": "string"
+      },
+      "unlistWhenEncrypted": {
+        "type": "boolean"
+      },
+      "outputPath": {
+        "type": "string"
+      }
+    },
+    "components": {
+      "PasswordProtectPage": {
+        "displayName": "Password Protect Page",
+        "defaultPosition": "body",
+        "defaultPriority": 100
+      }
+    }
+  },
+  "engines": {
+    "node": ">=22",
+    "npm": ">=10.9.2"
+  }
+}

@@ -7,7 +7,9 @@ tsconfig.tsbuildinfo
 .obsidian
 .quartz-cache
 private/
+content/private/
 .replit
 replit.nix
 .quartz/
+.vercel/
 quartz/cli/tui/dist/

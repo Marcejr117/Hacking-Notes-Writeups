@@ -1,22 +1,23 @@
 {
-  "name": "@jackyzha0/quartz",
-  "description": "🌱 publish your digital garden and notes as a website",
+  "name": "hacking-notes-writeups",
+  "description": "Quartz-powered Obsidian notes site",
   "private": true,
   "version": "5.0.0",
   "type": "module",
   "author": "jackyzha0 <j.zhao2k19@gmail.com>",
   "license": "MIT",
-  "homepage": "https://quartz.jzhao.xyz",
+  "homepage": "https://r1nzler.netrunners.sh",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jackyzha0/quartz.git"
+    "url": "https://github.com/Marcejr117/Hacking-Notes-Writeups.git"
   },
   "scripts": {
     "quartz": "./quartz/bootstrap-cli.mjs",
+    "build": "npx quartz plugin install && npx quartz build",
     "docs": "npx quartz build --serve -d docs",
     "check": "tsc --noEmit && npx prettier . --check",
     "format": "npx prettier . --write",
-    "test": "tsx --test",
+    "test": "tsx --test quartz/cli/helpers.test.js quartz/components/renderPage.test.ts quartz/components/scripts/popover.test.ts quartz/components/scripts/search.test.ts quartz/util/fileTrie.test.ts quartz/util/path.test.ts quartz/util/slugCollisions.test.ts",
     "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
     "install-plugins": "npx tsx ./quartz/plugins/loader/install-plugins.ts",
     "prebuild": "npm run install-plugins"

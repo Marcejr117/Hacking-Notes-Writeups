@@ -9,24 +9,28 @@ on:
       - v5
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: quartz-v5-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-test:
-    if: ${{ github.repository == 'jackyzha0/quartz' }}
-    strategy:
-      matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    permissions:
-      contents: write
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          submodules: recursive
+          token: ${{ secrets.SUBMODULES_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version-file: .node-version
+          cache: npm
 
       - name: Cache dependencies
         uses: actions/cache@v5
@@ -49,35 +53,16 @@ jobs:
       - name: Install Quartz plugins
         run: npx quartz plugin install
 
+      - name: Check password plugin
+        run: |
+          npm --prefix plugins/password-protect ci
+          npm --prefix plugins/password-protect run check
+
       - name: Check types and style
         run: npm run check
 
       - name: Test
         run: npm test
 
-      - name: Ensure Quartz builds, check bundle info
-        run: npx quartz build --bundleInfo -d docs
-
-  publish-tag:
-    if: ${{ github.repository == 'jackyzha0/quartz' && github.ref == 'refs/heads/v5' }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-      - name: Get package version
-        run: node -p -e '`PACKAGE_VERSION=${require("./package.json").version}`' >> $GITHUB_ENV
-      - name: Create release tag
-        uses: pkgdeps/git-tag-action@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_repo: ${{ github.repository }}
-          version: ${{ env.PACKAGE_VERSION }}
-          git_commit_sha: ${{ github.sha }}
-          git_tag_prefix: "v"
+      - name: Ensure Quartz builds
+        run: npx quartz build

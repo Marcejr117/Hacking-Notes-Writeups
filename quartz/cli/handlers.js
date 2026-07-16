@@ -785,7 +785,7 @@ export async function handleSync(argv) {
   if (argv.push) {
     console.log("Pushing your changes")
     const currentBranch = execSync("git rev-parse --abbrev-ref HEAD").toString().trim()
-    const res = spawnSync("git", ["push", "-uf", ORIGIN_NAME, currentBranch], {
+    const res = spawnSync("git", ["push", "-u", ORIGIN_NAME, currentBranch], {
       stdio: "inherit",
     })
     if (res.status !== 0) {
