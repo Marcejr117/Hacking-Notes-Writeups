@@ -26,6 +26,11 @@ const INTERNAL_EXPORTS = new Set(["manifest", "default"])
 
 const execAsync = promisify(execCb)
 
+function portableLocalResolved(source, subdir) {
+  const sourcePath = getSourceUrl(source).replaceAll("\\", "/")
+  return subdir ? path.posix.join(sourcePath, subdir.replaceAll("\\", "/")) : sourcePath
+}
+
 async function cloneWithSubdirAsync({ url, ref, subdir, pluginDir }) {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "quartz-plugin-"))
   try {
@@ -583,7 +588,7 @@ export async function handlePluginInstallUnified({
             )
             lockfile.plugins[name] = {
               source: entry.source,
-              resolved: url,
+              resolved: portableLocalResolved(entry.source, subdir),
               commit: "local",
               ...(subdir && { subdir }),
               installedAt: new Date().toISOString(),
@@ -620,7 +625,7 @@ export async function handlePluginInstallUnified({
           symlinkOrCopySync(resolvedPath, pluginDir)
           lockfile.plugins[name] = {
             source: entry.source,
-            resolved: resolvedPath,
+            resolved: portableLocalResolved(entry.source, subdir),
             commit: "local",
             ...(subdir && { subdir }),
             installedAt: new Date().toISOString(),
@@ -1221,7 +1226,7 @@ export async function handlePluginAdd(
         symlinkOrCopySync(resolvedPath, pluginDir)
         lockfile.plugins[name] = {
           source,
-          resolved: resolvedPath,
+          resolved: portableLocalResolved(source, subdir),
           commit: "local",
           ...(subdir && { subdir }),
           installedAt: new Date().toISOString(),

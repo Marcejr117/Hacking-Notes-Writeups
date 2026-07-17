@@ -50,18 +50,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Cache Quartz plugins
-        uses: actions/cache@v5
-        with:
-          path: .quartz/plugins
-          key: ${{ runner.os }}-plugins-${{ hashFiles('quartz.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-plugins-
-
       - run: npm ci
 
       - name: Install Quartz plugins
-        run: npx quartz plugin install
+        run: |
+          rm -rf .quartz/plugins
+          npx quartz plugin install --from-config
+          node scripts/verify-password-plugin.mjs
 
       - name: Check password plugin
         run: |
